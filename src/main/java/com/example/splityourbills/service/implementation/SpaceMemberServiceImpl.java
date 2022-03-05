@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.scanner.Constant;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -230,6 +231,18 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
         }
 
 
+    }
+
+    @Override
+    public SpaceMemberResponse findByParticularId(Long spaceMemberId) {
+        Optional<SpaceMembers> optionalSpaceMember = spaceMemberRepository.findById(spaceMemberId);
+        if (optionalSpaceMember.isPresent()){
+            SpaceMembers spaceMember = optionalSpaceMember.get();
+            SpaceMemberResponse spaceMemberResponse =  getSpaceMemberResponseFromSpaceMember(spaceMember);
+            return spaceMemberResponse;
+        }else{
+            throw new ResourceNotFoundException("Details not found, id : " + spaceMemberId);
+        }
     }
 }
 

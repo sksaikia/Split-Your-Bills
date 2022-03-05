@@ -65,6 +65,16 @@ public class SpaceMemberController {
         }
     }
 
+    @GetMapping("/id")
+    public BaseApiResponse getParticularMemberDetailById(@RequestParam Long spaceMemberId){
+        SpaceMemberResponse spaceMemberResponse = spaceMemberService.findByParticularId(spaceMemberId);
+        if (spaceMemberResponse!=null){
+            return createBaseApiResponse(spaceMemberResponse);
+        }else{
+            throw new ResourceNotFoundException("Details does not exist");
+        }
+    }
+
     private <DT> BaseApiResponse<DT> createBaseApiResponse(DT data){
         BaseApiResponse<DT> baseApiResponse = new BaseApiResponse<>(true);
         baseApiResponse.setData(data);

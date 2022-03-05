@@ -23,5 +23,5 @@ public interface SpaceMemberService{
     void deleteInviteInSpace(long spaceId,long inviteId);
     AddMemberToSpaceResponse addOrInviteMemberToSpace(List<NewSpaceMemberDTO> spaceMemberDTOS);
     SpaceMemberResponse findBySpaceIdAndPersonId(Long spaceId, Long personId);
-
+    SpaceMemberResponse findByParticularId(Long spaceMemberId);
 }
