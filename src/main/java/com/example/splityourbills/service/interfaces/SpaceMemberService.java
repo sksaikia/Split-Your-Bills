@@ -1,10 +1,12 @@
 package com.example.splityourbills.service.interfaces;
 
 import com.example.splityourbills.dto.space.SpaceDTO;
+import com.example.splityourbills.dto.spacemember.NewSpaceMemberDTO;
 import com.example.splityourbills.dto.spacemember.SpaceMembersDTO;
 import com.example.splityourbills.entity.SpaceMembers;
 import com.example.splityourbills.response.space.GetAllSpaceResponse;
 import com.example.splityourbills.response.space.SpaceResponse;
+import com.example.splityourbills.response.spaceMember.AddMemberToSpaceResponse;
 import com.example.splityourbills.response.spaceMember.GetAllSpaceMembersResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,5 +20,6 @@ public interface SpaceMemberService{
     GetAllSpaceMembersResponse getAllSpacesByInviteId(long inviteId);
     void deleteMemberInSpace(long spaceId,long userId);
     void deleteInviteInSpace(long spaceId,long inviteId);
+    AddMemberToSpaceResponse addOrInviteMemberToSpace(List<NewSpaceMemberDTO> spaceMemberDTOS);
 
 }

@@ -168,9 +168,6 @@ class CustomControllerAdvice {
     public ResponseEntity<ErrorResponse> handleResourceNotFound(
             Exception e
     ) {
-        // ... potential custom logic
-
-        //TODO change this
         HttpStatus status = HttpStatus.NOT_FOUND; // 404- because the api call is correct but no data found
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);

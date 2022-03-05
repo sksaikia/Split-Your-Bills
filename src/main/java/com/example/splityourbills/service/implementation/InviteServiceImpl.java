@@ -62,7 +62,8 @@ public class InviteServiceImpl implements InviteService {
             Invite invite = optionalInvite.get();
             return invite.getInviteId();
         }else{
-            throw new ResourceNotFoundException("Invite with the following data not found: spaceId " + spaceId + " phoneNo : " + phoneNo);
+            return 0L;
+         //   throw new ResourceNotFoundException("Invite with the following data not found: spaceId " + spaceId + " phoneNo : " + phoneNo);
         }
     }
 

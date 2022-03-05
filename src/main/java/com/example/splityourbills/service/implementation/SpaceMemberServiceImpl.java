@@ -1,18 +1,22 @@
 package com.example.splityourbills.service.implementation;
 
 import com.example.splityourbills.common.Constants;
+import com.example.splityourbills.dto.spacemember.NewSpaceMemberDTO;
 import com.example.splityourbills.dto.spacemember.SpaceMembersDTO;
 import com.example.splityourbills.entity.Invite;
+import com.example.splityourbills.entity.Space;
 import com.example.splityourbills.entity.SpaceMembers;
 import com.example.splityourbills.entity.User;
 import com.example.splityourbills.exception.custom_exceptions.common.ResourceNotFoundException;
 import com.example.splityourbills.repository.SpaceMemberRepository;
 import com.example.splityourbills.repository.UserRepository;
+import com.example.splityourbills.response.spaceMember.AddMemberToSpaceResponse;
 import com.example.splityourbills.response.spaceMember.GetAllSpaceMembersResponse;
 import com.example.splityourbills.response.spaceMember.SpaceMemberResponse;
 import com.example.splityourbills.service.interfaces.SpaceMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.scanner.Constant;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -42,21 +46,32 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
             if (optionalUser.isPresent()){
                 User currentUser = optionalUser.get();
                 currentUserId = currentUser.getUserId();
-                SpaceMembers spaceMembers = getSpaceMembersFromDTO(spaceMembersDTO.getSpaceId(),true,-1L,currentUserId);
-                spaceMemberRepository.save(spaceMembers);
-                return Constants.REGISTERD_USER;
+
+                Optional<SpaceMembers> optionalSpaceMembers = spaceMemberRepository.
+                        findBySpaceIdAndPersonId(spaceMembersDTO.getSpaceId(),currentUserId);
+
+                if(!optionalSpaceMembers.isPresent()){
+                    SpaceMembers spaceMembers = getSpaceMembersFromDTO(spaceMembersDTO.getSpaceId(),true,-1L,currentUserId);
+                    spaceMemberRepository.save(spaceMembers);
+                    return Constants.REGISTERD_USER;
+                }else{
+                    return Constants.IGNORED;
+                }
+
             }else{
 
             }
         }else{
             Long spaceId = spaceMembersDTO.getSpaceId();
+
+            long inviteId =  inviteService.getInviteBySpaceIdAndPhoneNo(spaceId,phoneNo);
+            if(inviteId!=0){
+                return Constants.IGNORED;
+            }
             Invite newInvite = new Invite(spaceId,phoneNo,spaceMembersDTO.getInviteName());
             inviteService.addInvite(newInvite);
 
-            long inviteId =  inviteService.getInviteBySpaceIdAndPhoneNo(spaceId,phoneNo);
-            if(inviteId==0){
-                throw new ResourceNotFoundException("Invite Id could not be retrieved");
-            }
+            inviteId =  inviteService.getInviteBySpaceIdAndPhoneNo(spaceId,phoneNo);
 
             SpaceMembers spaceMembers = getSpaceMembersFromDTO(spaceMembersDTO.getSpaceId(),false,inviteId,-1L);
             spaceMemberRepository.save(spaceMembers);
@@ -173,6 +188,34 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
         SpaceMembers spaceMembers = new SpaceMembers(spaceMembersDTO.getSpaceId(),true,
                 spaceMembersDTO.getInviteId(), spaceMembersDTO.getPersonId());
         spaceMemberRepository.save(spaceMembers);
+    }
+
+    public AddMemberToSpaceResponse addOrInviteMemberToSpace(List<NewSpaceMemberDTO> spaceMemberDTOS) {
+
+        int registeredUsers = 0;
+        int invitedUsers = 0;
+        int failures = 0;
+        int ignored = 0;
+
+        for(NewSpaceMemberDTO spaceMemberDTO : spaceMemberDTOS){
+            SpaceMembersDTO spaceMembersDTO = new SpaceMembersDTO(
+                    spaceMemberDTO.getSpaceId(),
+                    spaceMemberDTO.getPhoneNo(),
+                    spaceMemberDTO.getInviteName()
+            );
+            int result =  addInviteOrPerson(spaceMembersDTO);
+            if (result == Constants.REGISTERD_USER){
+                registeredUsers++;
+            }else if (result == Constants.INVITED_USER){
+                invitedUsers++;
+            }else if (result == Constants.ADDING_MEMBER_ERROR){
+                failures++;
+            }else{
+                ignored++;
+            }
+        }
+
+        return new AddMemberToSpaceResponse(registeredUsers,invitedUsers,failures,ignored);
     }
 }
 

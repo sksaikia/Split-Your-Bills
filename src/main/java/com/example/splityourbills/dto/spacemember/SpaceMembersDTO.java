@@ -69,9 +69,9 @@ public class SpaceMembersDTO {
         this.inviteId = inviteId;
     }
 
-    public SpaceMembersDTO(Long spaceId, Long personId, Long inviteId) {
+    public SpaceMembersDTO(Long spaceId, String phoneNo, String inviteName) {
         this.spaceId = spaceId;
-        this.personId = personId;
-        this.inviteId = inviteId;
+        this.phoneNo = phoneNo;
+        this.inviteName = inviteName;
     }
 }
