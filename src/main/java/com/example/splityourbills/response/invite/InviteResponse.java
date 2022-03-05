@@ -7,11 +7,10 @@ public class InviteResponse {
     private Long spaceId;
     private String phoneNo;
     private String inviteName;
+    private Date lastUpdated;
 
     public InviteResponse() {
     }
-
-    private Date lastUpdated;
 
     public Long getInviteId() {
         return inviteId;

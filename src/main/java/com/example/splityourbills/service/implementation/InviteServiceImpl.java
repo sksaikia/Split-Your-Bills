@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +31,15 @@ public class InviteServiceImpl implements InviteService {
     InviteRepository inviteRepository;
 
     @Override
-    public void addInvite(InviteDTO inviteDTO) {
-//        Invite invite = getSpaceFromDTO(spaceDTO,userId);
-//        inviteRepository.save(invite);
-//        long spaceId = invite.getSpaceId();
-//        return createSpaceResponse(spaceId,space);
+    public Boolean addInvite(InviteDTO inviteDTO) {
+        Invite invite = getInviteFromDTO(inviteDTO);
+        inviteRepository.save(invite);
+        return true;
+    }
+
+    private Invite getInviteFromDTO(InviteDTO inviteDTO) {
+        Invite invite = new Invite(inviteDTO);
+        return invite;
     }
 
     @Override
@@ -55,6 +60,13 @@ public class InviteServiceImpl implements InviteService {
     public GetAllInviteResponse getAllInviteByInviteId(Long inviteId) {
         return null;
     }
+
+//    private InviteResponse createInviteResponse(Invite invite) {
+//        InviteResponse inviteResponse = new InviteResponse(invite.getInviteId(),invite.getSpaceId()
+//        ,invite.getPhoneNo(),invite.getInviteName(),invite.getLastUpdated());
+//        return inviteResponse;
+//    }
+
 }
 
 

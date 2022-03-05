@@ -1,6 +1,7 @@
 package com.example.splityourbills.entity;
 
 import com.example.splityourbills.config.DateAudit;
+import com.example.splityourbills.dto.invite.InviteDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -42,7 +43,13 @@ public class Invite {
         this.inviteName = inviteName;
     }
 
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
 
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 
     public Long getSpaceId() {
         return spaceId;
@@ -70,6 +77,11 @@ public class Invite {
         this.spaceId = spaceId;
         this.phoneNo = phoneNo;
         this.inviteName = inviteName;
+    }
+    public Invite(InviteDTO inviteDTO){
+        this.spaceId = inviteDTO.getSpaceId();
+        this.inviteName = inviteDTO.getInviteName();
+        this.phoneNo = inviteDTO.getPhoneNo();
     }
 
     public void setInviteId(Long inviteId) {
