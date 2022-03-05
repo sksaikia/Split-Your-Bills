@@ -5,4 +5,5 @@ public class Constants {
     public static final Integer INVITED_USER = 2;
     public static final Integer IGNORED = 3;
     public static final Integer ADDING_MEMBER_ERROR = 0;
+    public static final Long ERROR_STATE_MEMBERS = -1L;
 }

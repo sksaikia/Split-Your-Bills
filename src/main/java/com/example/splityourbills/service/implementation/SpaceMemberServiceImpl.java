@@ -217,6 +217,20 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
 
         return new AddMemberToSpaceResponse(registeredUsers,invitedUsers,failures,ignored);
     }
+
+    @Override
+    public SpaceMemberResponse findBySpaceIdAndPersonId(Long spaceId, Long personId) {
+        Optional<SpaceMembers> optionalSpaceMembers = spaceMemberRepository.findBySpaceIdAndPersonId(spaceId, personId);
+        if (optionalSpaceMembers.isPresent()){
+            SpaceMembers spaceMember = optionalSpaceMembers.get();
+            SpaceMemberResponse spaceMemberResponse =  getSpaceMemberResponseFromSpaceMember(spaceMember);
+            return spaceMemberResponse;
+        }else{
+            throw new ResourceNotFoundException("Details with particular data not found, spaceId : " + spaceId + " personId : " + personId);
+        }
+
+
+    }
 }
 
 

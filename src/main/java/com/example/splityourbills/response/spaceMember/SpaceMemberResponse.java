@@ -1,5 +1,6 @@
 package com.example.splityourbills.response.spaceMember;
 
+import com.example.splityourbills.common.Constants;
 import com.example.splityourbills.entity.SpaceMembers;
 import com.example.splityourbills.entity.User;
 import com.example.splityourbills.response.auth.UserResponse;
@@ -19,9 +20,6 @@ public class SpaceMemberResponse {
     private UserResponse userDetails;
     private Long inviteId;
     private InviteResponse invite;
-
-
-
 
     public UserResponse getUserDetails() {
         return userDetails;
@@ -100,7 +98,10 @@ public class SpaceMemberResponse {
         this.inviteId = inviteId;
         this.isJoined = isJoined;
         this.lastUpdated = lastUpdated;
-        this.invite = new InviteResponse(spaceMembers.getInvite());
-        this.userDetails = new UserResponse(spaceMembers.getUser());
+        if (inviteId!= Constants.ERROR_STATE_MEMBERS)
+            this.invite = new InviteResponse(spaceMembers.getInvite());
+        if (personId!=Constants.ERROR_STATE_MEMBERS)
+            this.userDetails = new UserResponse(spaceMembers.getUser());
     }
+
 }

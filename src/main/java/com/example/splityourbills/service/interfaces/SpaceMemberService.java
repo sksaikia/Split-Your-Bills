@@ -8,6 +8,7 @@ import com.example.splityourbills.response.space.GetAllSpaceResponse;
 import com.example.splityourbills.response.space.SpaceResponse;
 import com.example.splityourbills.response.spaceMember.AddMemberToSpaceResponse;
 import com.example.splityourbills.response.spaceMember.GetAllSpaceMembersResponse;
+import com.example.splityourbills.response.spaceMember.SpaceMemberResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -21,5 +22,6 @@ public interface SpaceMemberService{
     void deleteMemberInSpace(long spaceId,long userId);
     void deleteInviteInSpace(long spaceId,long inviteId);
     AddMemberToSpaceResponse addOrInviteMemberToSpace(List<NewSpaceMemberDTO> spaceMemberDTOS);
+    SpaceMemberResponse findBySpaceIdAndPersonId(Long spaceId, Long personId);
 
 }

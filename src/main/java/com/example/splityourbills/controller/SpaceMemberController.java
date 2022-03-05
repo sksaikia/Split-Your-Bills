@@ -8,6 +8,7 @@ import com.example.splityourbills.exception.custom_exceptions.common.ResourceNot
 import com.example.splityourbills.response.space.SpaceResponse;
 import com.example.splityourbills.response.spaceMember.AddMemberToSpaceResponse;
 import com.example.splityourbills.response.spaceMember.GetAllSpaceMembersResponse;
+import com.example.splityourbills.response.spaceMember.SpaceMemberResponse;
 import com.example.splityourbills.security.CurrentUser;
 import com.example.splityourbills.security.UserPrincipal;
 import com.example.splityourbills.service.implementation.SpaceMemberServiceImpl;
@@ -38,9 +39,7 @@ public class SpaceMemberController {
 
         AddMemberToSpaceResponse addMemberToSpaceResponse =  spaceMemberService.addOrInviteMemberToSpace(spaceDTO);
         if (addMemberToSpaceResponse!=null){
-            BaseApiResponse baseApiResponse = new BaseApiResponse(true);
-            baseApiResponse.setData(addMemberToSpaceResponse);
-            return baseApiResponse;
+            return createBaseApiResponse(addMemberToSpaceResponse);
         }else{
             throw new InternalServerException("Unexpected error occured");
         }
@@ -50,12 +49,26 @@ public class SpaceMemberController {
     public BaseApiResponse getAllMembersBySpaceId(@PathVariable("spaceId") Long spaceId){
         GetAllSpaceMembersResponse response = spaceMemberService.getAllMembersbySpaceId(spaceId);
         if (response!=null){
-            BaseApiResponse baseApiResponse = new BaseApiResponse(true);
-            baseApiResponse.setData(response);
-            return baseApiResponse;
+            return createBaseApiResponse(response);
         }else{
             throw new ResourceNotFoundException("Space does not exist");
         }
+    }
+    @GetMapping()
+    public BaseApiResponse getAllDetailsBySpaceAndPersonId(@RequestParam Long spaceId,
+                                                           @RequestParam Long personId){
+        SpaceMemberResponse spaceMemberResponse = spaceMemberService.findBySpaceIdAndPersonId(spaceId, personId);
+        if (spaceMemberResponse!=null){
+            return createBaseApiResponse(spaceMemberResponse);
+        }else{
+            throw new ResourceNotFoundException("Details does not exist");
+        }
+    }
+
+    private <DT> BaseApiResponse<DT> createBaseApiResponse(DT data){
+        BaseApiResponse<DT> baseApiResponse = new BaseApiResponse<>(true);
+        baseApiResponse.setData(data);
+        return baseApiResponse;
     }
 
 }
