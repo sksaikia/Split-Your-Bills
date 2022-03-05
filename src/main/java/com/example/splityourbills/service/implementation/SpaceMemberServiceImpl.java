@@ -30,16 +30,19 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private InviteServiceImpl inviteService;
+
     @Override
     public Integer addInviteOrPerson(SpaceMembersDTO spaceMembersDTO) {
-        Long userId = 0L;
+        Long currentUserId = 0L;
         String phoneNo = spaceMembersDTO.getPhoneNo();
         if (userRepository.existsByPhoneNo(phoneNo)){
             Optional<User> optionalUser =  userRepository.findByPhoneNo(phoneNo);
             if (optionalUser.isPresent()){
                 User currentUser = optionalUser.get();
-                Long currentUserId = currentUser.getUserId();
-                SpaceMembers spaceMembers = getSpaceMembersFromDTO(spaceMembersDTO.getSpaceId(),true,0L,currentUserId);
+                currentUserId = currentUser.getUserId();
+                SpaceMembers spaceMembers = getSpaceMembersFromDTO(spaceMembersDTO.getSpaceId(),true,-1L,currentUserId);
                 spaceMemberRepository.save(spaceMembers);
                 return Constants.REGISTERD_USER;
             }else{
@@ -48,14 +51,15 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
         }else{
             Long spaceId = spaceMembersDTO.getSpaceId();
             Invite newInvite = new Invite(spaceId,phoneNo,spaceMembersDTO.getInviteName());
-            //TODO add these to the invite and add to the space members table - move it to the service of invites
-//         //   invitesService.addInvite(newInvite);
-//
-//            long inviteId =  invitesService.getInviteByPhoneNoAndSpaceId(spaceId,phoneNo);
-//
-//            SpaceMembers spaceMembers = new SpaceMembers();
-//            spaceMembers.setSpaceMembers(spaceId,inviteId,phoneNo);
-//            spaceMembersRepository.save(spaceMembers);
+            inviteService.addInvite(newInvite);
+
+            long inviteId =  inviteService.getInviteBySpaceIdAndPhoneNo(spaceId,phoneNo);
+            if(inviteId==0){
+                throw new ResourceNotFoundException("Invite Id could not be retrieved");
+            }
+
+            SpaceMembers spaceMembers = getSpaceMembersFromDTO(spaceMembersDTO.getSpaceId(),false,inviteId,-1L);
+            spaceMemberRepository.save(spaceMembers);
 
             return Constants.INVITED_USER;
         }

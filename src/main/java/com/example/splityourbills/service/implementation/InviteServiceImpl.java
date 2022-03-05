@@ -31,8 +31,7 @@ public class InviteServiceImpl implements InviteService {
     InviteRepository inviteRepository;
 
     @Override
-    public Boolean addInvite(InviteDTO inviteDTO) {
-        Invite invite = getInviteFromDTO(inviteDTO);
+    public Boolean addInvite(Invite invite) {
         inviteRepository.save(invite);
         return true;
     }
@@ -44,16 +43,27 @@ public class InviteServiceImpl implements InviteService {
 
     @Override
     public InviteResponse getInviteByInviteId(Long inviteId) {
+        Optional<Invite> optionalInvite = inviteRepository.findByInviteId(inviteId);
+        if (optionalInvite.isPresent()){
+            Invite invite = optionalInvite.get();
+            InviteResponse inviteResponse = new InviteResponse(invite.getInviteId(),invite.getSpaceId(),
+                    invite.getPhoneNo(),invite.getInviteName(),invite.getLastUpdated());
+            return inviteResponse;
+        }else{
+            throw new ResourceNotFoundException("Details with given invite id not found, inviteId: " + inviteId);
+        }
 
-
-
-
-        return null;
     }
 
     @Override
-    public InviteResponse getInviteBySpaceIdAndPhoneNo(Long spaceId, String phoneNo) {
-        return null;
+    public Long getInviteBySpaceIdAndPhoneNo(Long spaceId, String phoneNo) {
+        Optional<Invite> optionalInvite = inviteRepository.findBySpaceIdAndPhoneNo(spaceId, phoneNo);
+        if (optionalInvite.isPresent()){
+            Invite invite = optionalInvite.get();
+            return invite.getInviteId();
+        }else{
+            throw new ResourceNotFoundException("Invite with the following data not found: spaceId " + spaceId + " phoneNo : " + phoneNo);
+        }
     }
 
     @Override
