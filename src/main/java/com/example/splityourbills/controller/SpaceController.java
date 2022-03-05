@@ -32,19 +32,6 @@ public class SpaceController {
         }
 
     }
-////TODO shift it to the space members
-//    @GetMapping("/person/{personId}")
-//    public BaseApiResponse getMembersBySpaceId(@PathVariable("personId") long personId){
-//        GetAllSpaceResponse getAllSpaceResponse = spaceService.getAllSpacesByUserId(personId);
-//        if (getAllSpaceResponse!=null) {
-//            BaseApiResponse baseApiResponse = new BaseApiResponse(true);
-//            baseApiResponse.setData(getAllSpaceResponse);
-//            return baseApiResponse;
-//        }else{
-//            throw new ResourceNotFoundException("Space for that particular personId not found, personId : " + personId);
-//        }
-//
-//    }
 
     @GetMapping("/{spaceId}")
     public  BaseApiResponse getSpaceById(@PathVariable("spaceId") long spaceId){

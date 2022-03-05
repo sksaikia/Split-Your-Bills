@@ -1,5 +1,7 @@
 package com.example.splityourbills.entity;
 
+import com.example.splityourbills.dto.transaction.TransactionDTO;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -24,6 +26,12 @@ public class Transaction {
     @Column(nullable = false)
     private Date lastUpdated;
 
+    public Transaction(TransactionDTO transactionDTO) {
+        this.spaceId = transactionDTO.getSpaceId();
+        this.transactionName = transactionDTO.getTransactionName();
+        this.transactionDescription = transactionDTO.getTransactionDescription();
+    }
+
     @PrePersist
     private void onCreate(){
         lastUpdated = new Date();
@@ -32,6 +40,14 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "space_id", referencedColumnName = "space_id",insertable = false,updatable = false)
     private Space space;
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 
     public Transaction() {
     }
