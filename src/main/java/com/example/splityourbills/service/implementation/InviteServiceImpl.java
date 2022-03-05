@@ -39,6 +39,10 @@ public class InviteServiceImpl implements InviteService {
 
     @Override
     public InviteResponse getInviteByInviteId(Long inviteId) {
+
+
+
+
         return null;
     }
 
