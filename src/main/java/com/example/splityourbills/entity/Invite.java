@@ -1,6 +1,5 @@
 package com.example.splityourbills.entity;
 
-import com.example.splityourbills.config.DateAudit;
 import com.example.splityourbills.dto.invite.InviteDTO;
 
 import javax.persistence.Entity;

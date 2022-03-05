@@ -9,12 +9,16 @@ import com.example.splityourbills.exception.custom_exceptions.common.InternalSer
 import com.example.splityourbills.exception.custom_exceptions.common.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
+//TODO need to fix the 401 error handler;
 @RestControllerAdvice
 class CustomControllerAdvice {
 
@@ -41,9 +45,6 @@ class CustomControllerAdvice {
     public ResponseEntity<ErrorResponse> handleInternalServerException(
             Exception e
     ) {
-        // ... potential custom logic
-
-        //TODO change this
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
@@ -60,38 +61,14 @@ class CustomControllerAdvice {
         );
     }
 
-
-    @ExceptionHandler(AuthenticationException.class) // exception handled
-    public ResponseEntity<ErrorResponse> handleRegistrationException(
-            Exception e
-    ) {
-        // ... potential custom logic
-
-        //TODO change the response code
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
-        e.printStackTrace(printWriter);
-        String stackTrace = stringWriter.toString();
-
-        return new ResponseEntity<>(
-                new ErrorResponse(
-                        status,
-                        e.getMessage(),
-                        stackTrace
-                ),
-                status
-        );
-    }
 
     // fallback method
     @ExceptionHandler(Exception.class) // exception handled
     public ResponseEntity<ErrorResponse> handleExceptions(
             Exception e
     ) {
-        // ... potential custom logic
-
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
+        //TODO test this once
+        HttpStatus status = HttpStatus.UNAUTHORIZED; // 401
 
         // converting the stack trace to String
         StringWriter stringWriter = new StringWriter();
@@ -111,7 +88,7 @@ class CustomControllerAdvice {
 
 
     /***
-    * When there is a conflict of data, use cases-
+     * When there is a conflict of data, use cases-
      * 1. While registering the user, if we use already existing phone number
      *
      * ***/
@@ -126,13 +103,13 @@ class CustomControllerAdvice {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         e.printStackTrace(printWriter);
         String stackTrace = stringWriter.toString();
-        ErrorResponse er =  new ErrorResponse(
+        ErrorResponse er = new ErrorResponse(
                 status,
                 e.getMessage(),
                 stackTrace,
                 false
         );
-        return new BaseApiResponse(false,null,er);
+        return new BaseApiResponse(false, null, er);
     }
 
     @ExceptionHandler(CustomParameterConstraintException.class)
@@ -154,12 +131,13 @@ class CustomControllerAdvice {
      * This is the default response for 404 not found exception ie the path does not exist
      * ***/
     @ExceptionHandler(NoHandlerFoundException.class)
-    @ResponseStatus(value= HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public BaseApiResponse requestHandlingNoHandlerFound() {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "This path does not exist");
-        return new BaseApiResponse(false,null,errorResponse);
+        return new BaseApiResponse(false, null, errorResponse);
     }
+
     /***
      * Most common response ; when no data is found
      * ***/
@@ -181,6 +159,25 @@ class CustomControllerAdvice {
                         stackTrace,
                         false,
                         NO_DATA_FOUND_CODE
+                ),
+                status
+        );
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> badRequest(HttpServletRequest req, Exception e) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        e.printStackTrace(printWriter);
+        String stackTrace = stringWriter.toString();
+
+        return new ResponseEntity<>(
+                new ErrorResponse(
+                        status,
+                        "LOL EREN YEAGER",
+                        stackTrace,
+                        false
                 ),
                 status
         );
