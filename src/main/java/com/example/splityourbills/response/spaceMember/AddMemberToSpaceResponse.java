@@ -11,6 +11,15 @@ public class AddMemberToSpaceResponse {
     private Integer registeredUsers;
     private Integer invitedUsers;
     private Integer errors;
+
+    public Integer getIgnored() {
+        return ignored;
+    }
+
+    public void setIgnored(Integer ignored) {
+        this.ignored = ignored;
+    }
+
     private Integer ignored;
 
     public Integer getRegisteredUsers() {

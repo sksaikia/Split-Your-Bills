@@ -67,18 +67,20 @@ public class AuthServiceImpl implements AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String username = "";
+        Long currentUserId = 0L;
         if (userRepository.existsByPhoneNo(loginRequest.getPhoneNo())){
             Optional<User> optionalUser = userRepository.findByPhoneNo(loginRequest.getPhoneNo());
             if (optionalUser.isPresent()){
                  User user =   optionalUser.get();
                  username =  user.getUserName();
+                 currentUserId =  user.getUserId();
             }else{
                 //TODO - error fetching user data
             }
         }
 
         String jwt = tokenProvider.generateToken(authentication);
-        LoginResponse loginResponse = new LoginResponse(new JwtAuthenticationResponse(jwt), new UserResponse( loginRequest.getPhoneNo(), username));
+        LoginResponse loginResponse = new LoginResponse(new JwtAuthenticationResponse(jwt), new UserResponse( loginRequest.getPhoneNo(), username,currentUserId));
 
         return loginResponse;
     }

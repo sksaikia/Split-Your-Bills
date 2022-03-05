@@ -1,5 +1,7 @@
 package com.example.splityourbills.response.invite;
 
+import com.example.splityourbills.entity.Invite;
+
 import java.util.Date;
 
 public class InviteResponse {
@@ -58,5 +60,12 @@ public class InviteResponse {
         this.phoneNo = phoneNo;
         this.inviteName = inviteName;
         this.lastUpdated = lastUpdated;
+    }
+    public InviteResponse(Invite invite){
+        this.inviteId = invite.getInviteId();
+        this.spaceId = invite.getSpaceId();
+        this.phoneNo = invite.getPhoneNo();
+        this.inviteName = invite.getInviteName();
+        this.lastUpdated = invite.getLastUpdated();
     }
 }

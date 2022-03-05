@@ -7,6 +7,7 @@ import com.example.splityourbills.exception.custom_exceptions.common.InternalSer
 import com.example.splityourbills.exception.custom_exceptions.common.ResourceNotFoundException;
 import com.example.splityourbills.response.space.SpaceResponse;
 import com.example.splityourbills.response.spaceMember.AddMemberToSpaceResponse;
+import com.example.splityourbills.response.spaceMember.GetAllSpaceMembersResponse;
 import com.example.splityourbills.security.CurrentUser;
 import com.example.splityourbills.security.UserPrincipal;
 import com.example.splityourbills.service.implementation.SpaceMemberServiceImpl;
@@ -43,8 +44,18 @@ public class SpaceMemberController {
         }else{
             throw new InternalServerException("Unexpected error occured");
         }
+    }
 
-
+    @GetMapping("/{spaceId}")
+    public BaseApiResponse getAllMembersBySpaceId(@PathVariable("spaceId") Long spaceId){
+        GetAllSpaceMembersResponse response = spaceMemberService.getAllMembersbySpaceId(spaceId);
+        if (response!=null){
+            BaseApiResponse baseApiResponse = new BaseApiResponse(true);
+            baseApiResponse.setData(response);
+            return baseApiResponse;
+        }else{
+            throw new ResourceNotFoundException("Space does not exist");
+        }
     }
 
 }

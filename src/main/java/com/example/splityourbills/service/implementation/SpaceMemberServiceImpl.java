@@ -111,7 +111,7 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
 
     private SpaceMemberResponse getSpaceMemberResponseFromSpaceMember(SpaceMembers spaceMember) {
         SpaceMemberResponse spaceMemberResponse = new SpaceMemberResponse(spaceMember.getSpaceMemberId(),spaceMember.getSpaceId()
-        ,spaceMember.getPersonId(),spaceMember.getInviteId(),spaceMember.getJoined(),spaceMember.getLastUpdated());
+        ,spaceMember.getPersonId(),spaceMember.getInviteId(),spaceMember.getJoined(),spaceMember.getLastUpdated(),spaceMember);
         return spaceMemberResponse;
     }
 
