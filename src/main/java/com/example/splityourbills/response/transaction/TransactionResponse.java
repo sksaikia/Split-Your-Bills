@@ -12,6 +12,26 @@ public class TransactionResponse {
     public TransactionResponse() {
     }
 
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public void setSpaceId(Long spaceId) {
+        this.spaceId = spaceId;
+    }
+
+    public void setTransactionName(String transactionName) {
+        this.transactionName = transactionName;
+    }
+
+    public void setTransactionDescription(String transactionDescription) {
+        this.transactionDescription = transactionDescription;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
     public TransactionResponse(Long transactionId, Long spaceId, String transactionName, String transactionDescription, Date lastUpdated) {
         this.transactionId = transactionId;
         this.spaceId = spaceId;

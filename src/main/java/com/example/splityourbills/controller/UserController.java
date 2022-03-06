@@ -1,7 +1,7 @@
 package com.example.splityourbills.controller;
 
 
-import com.example.splityourbills.model.auth.UserSummary;
+import com.example.splityourbills.dto.auth.UserSummary;
 import com.example.splityourbills.repository.UserRepository;
 import com.example.splityourbills.security.CurrentUser;
 import com.example.splityourbills.security.UserPrincipal;

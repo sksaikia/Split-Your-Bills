@@ -1,6 +1,6 @@
 package com.example.splityourbills.controller;
 
-import com.example.splityourbills.model.auth.ApiResponse;
+import com.example.splityourbills.dto.auth.ApiResponse;
 import com.example.splityourbills.repository.UserRepository;
 import com.example.splityourbills.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;

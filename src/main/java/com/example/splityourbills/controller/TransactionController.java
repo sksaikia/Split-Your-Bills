@@ -1,23 +1,15 @@
 package com.example.splityourbills.controller;
 
 import com.example.splityourbills.common.BaseApiResponse;
-import com.example.splityourbills.dto.spacemember.NewSpaceMemberDTO;
 import com.example.splityourbills.dto.transaction.TransactionDTO;
 import com.example.splityourbills.exception.custom_exceptions.common.InternalServerException;
-import com.example.splityourbills.exception.custom_exceptions.common.ResourceNotFoundException;
-import com.example.splityourbills.model.auth.ApiResponse;
-import com.example.splityourbills.response.spaceMember.AddMemberToSpaceResponse;
-import com.example.splityourbills.response.spaceMember.GetAllSpaceMembersResponse;
-import com.example.splityourbills.response.spaceMember.SpaceMemberResponse;
-import com.example.splityourbills.service.implementation.SpaceMemberServiceImpl;
+import com.example.splityourbills.dto.auth.ApiResponse;
+import com.example.splityourbills.response.transaction.TransactionResponse;
 import com.example.splityourbills.service.implementation.TransactionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 
 
 @RestController
@@ -28,12 +20,11 @@ public class TransactionController {
     private TransactionServiceImpl transactionService;
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addTransaction(@RequestBody TransactionDTO transactionDTO){
+    public BaseApiResponse addTransaction(@RequestBody TransactionDTO transactionDTO){
 
-       Boolean success = transactionService.addTransaction(transactionDTO);
-        if (success){
-            return new ResponseEntity<ApiResponse>(new ApiResponse(true,
-                    "Succesfully transaction added"), HttpStatus.OK);
+        TransactionResponse response = transactionService.addTransaction(transactionDTO);
+        if (response!=null){
+            return createBaseApiResponse(response);
         }else{
             throw new InternalServerException("Unexpected error occured");
         }

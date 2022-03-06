@@ -1,4 +1,4 @@
-package com.example.splityourbills.model.auth;
+package com.example.splityourbills.dto.auth;
 
 public class UserSummary {
     private Long id;

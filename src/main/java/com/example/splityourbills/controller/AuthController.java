@@ -2,10 +2,10 @@ package com.example.splityourbills.controller;
 
 import com.example.splityourbills.exception.custom_exceptions.auth.AuthenticationException;
 import com.example.splityourbills.exception.custom_exceptions.common.CustomDataConflictException;
-import com.example.splityourbills.model.auth.ApiResponse;
+import com.example.splityourbills.dto.auth.ApiResponse;
 import com.example.splityourbills.common.BaseApiResponse;
-import com.example.splityourbills.model.auth.LoginRequest;
-import com.example.splityourbills.model.auth.SignUpRequest;
+import com.example.splityourbills.dto.auth.LoginRequest;
+import com.example.splityourbills.dto.auth.SignUpRequest;
 import com.example.splityourbills.repository.UserRepository;
 import com.example.splityourbills.response.auth.LoginResponse;
 import com.example.splityourbills.security.JwtTokenProvider;

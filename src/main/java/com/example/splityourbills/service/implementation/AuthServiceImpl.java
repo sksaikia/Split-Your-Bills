@@ -1,8 +1,8 @@
 package com.example.splityourbills.service.implementation;
 
 import com.example.splityourbills.exception.custom_exceptions.common.CustomDataConflictException;
-import com.example.splityourbills.model.auth.LoginRequest;
-import com.example.splityourbills.model.auth.SignUpRequest;
+import com.example.splityourbills.dto.auth.LoginRequest;
+import com.example.splityourbills.dto.auth.SignUpRequest;
 import com.example.splityourbills.entity.User;
 import com.example.splityourbills.repository.UserRepository;
 import com.example.splityourbills.response.auth.JwtAuthenticationResponse;

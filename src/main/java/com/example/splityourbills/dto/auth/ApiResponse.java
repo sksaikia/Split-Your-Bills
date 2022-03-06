@@ -1,4 +1,4 @@
-package com.example.splityourbills.model.auth;
+package com.example.splityourbills.dto.auth;
 
 import org.springframework.http.HttpStatus;
 
