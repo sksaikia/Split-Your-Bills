@@ -1,16 +1,47 @@
 package com.example.splityourbills.response.transactionDetails;
 
+import com.example.splityourbills.common.Constants;
 import com.example.splityourbills.entity.TransactionDetails;
+import com.example.splityourbills.response.auth.UserResponse;
+import com.example.splityourbills.response.invite.InviteResponse;
+import com.example.splityourbills.response.transaction.TransactionResponse;
 
 import java.util.Date;
 
 public class TransactionDetailsResponse {
     private Long trasnactionDetailId;
     private Long transactionId;
+    private TransactionResponse transaction;
     private Long personId;
+    private UserResponse user;
     private Long inviteId;
+    private InviteResponse invite;
     private Long amount;
-    private Date lastUodated;
+    private Date lastUpdated;
+
+    public TransactionResponse getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(TransactionResponse transaction) {
+        this.transaction = transaction;
+    }
+
+    public UserResponse getUser() {
+        return user;
+    }
+
+    public void setUser(UserResponse user) {
+        this.user = user;
+    }
+
+    public InviteResponse getInvite() {
+        return invite;
+    }
+
+    public void setInvite(InviteResponse invite) {
+        this.invite = invite;
+    }
 
     public TransactionDetailsResponse(TransactionDetails transactionDetails) {
         this.trasnactionDetailId = transactionDetails.getTransactionDetailsId();
@@ -18,7 +49,12 @@ public class TransactionDetailsResponse {
         this.personId = transactionDetails.getPersonId();
         this.inviteId = transactionDetails.getInviteId();
         this.amount = transactionDetails.getAmount();
-        this.lastUodated = transactionDetails.getLastUpdated();
+        this.lastUpdated = transactionDetails.getLastUpdated();
+        if (inviteId!= Constants.ERROR_STATE_MEMBERS)
+            this.invite = new InviteResponse(transactionDetails.getInvite());
+        if (personId!=Constants.ERROR_STATE_MEMBERS)
+            this.user = new UserResponse(transactionDetails.getUser());
+        this.transaction = new TransactionResponse(transactionDetails.getTransaction());
     }
 
     public Long getTrasnactionDetailId() {
@@ -61,23 +97,30 @@ public class TransactionDetailsResponse {
         this.amount = amount;
     }
 
-    public Date getLastUodated() {
-        return lastUodated;
+    public Date getLastUpdated() {
+        return lastUpdated;
     }
 
-    public void setLastUodated(Date lastUodated) {
-        this.lastUodated = lastUodated;
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
     public TransactionDetailsResponse() {
     }
 
-    public TransactionDetailsResponse(Long trasnactionDetailId, Long transactionId, Long personId, Long inviteId, Long amount, Date lastUodated) {
+    public TransactionDetailsResponse(Long trasnactionDetailId, Long transactionId, Long personId, Long inviteId,
+                                      Long amount, Date lastUpdated, TransactionDetails transactionDetails) {
         this.trasnactionDetailId = trasnactionDetailId;
         this.transactionId = transactionId;
         this.personId = personId;
         this.inviteId = inviteId;
         this.amount = amount;
-        this.lastUodated = lastUodated;
+        this.lastUpdated = lastUpdated;
+        if (inviteId!= Constants.ERROR_STATE_MEMBERS)
+            this.invite = new InviteResponse(transactionDetails.getInvite());
+        if (personId!=Constants.ERROR_STATE_MEMBERS)
+            this.user = new UserResponse(transactionDetails.getUser());
+        this.transaction = new TransactionResponse(transactionDetails.getTransaction());
+        System.out.println(transactionDetails.getTransaction().toString());
     }
 }

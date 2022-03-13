@@ -9,6 +9,21 @@ import java.util.Date;
 @Entity
 @Table(name="transaction_details")
 public class TransactionDetails{
+    @Override
+    public String toString() {
+        return "TransactionDetails{" +
+                "transactionDetailsId=" + transactionDetailsId +
+                ", transactionID=" + transactionID +
+                ", personId=" + personId +
+                ", inviteId=" + inviteId +
+                ", amount=" + amount +
+                ", lastUpdated=" + lastUpdated +
+                ", transaction=" + transaction +
+                ", user=" + user +
+                ", invite=" + invite +
+                '}';
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="transaction_details_id")
@@ -39,7 +54,10 @@ public class TransactionDetails{
     private Date lastUpdated;
 
     public TransactionDetails(TransactionDetailsDTO transactionDTO) {
-
+           this.transactionID =  transactionDTO.getTransactionId();
+           this.personId = transactionDTO.getPersonId();
+           this.inviteId = transactionDTO.getInviteId();
+           this.amount = transactionDTO.getAmount();
     }
 
     @PrePersist

@@ -1,5 +1,6 @@
 package com.example.splityourbills.response.transaction;
 
+import com.example.splityourbills.entity.Transaction;
 import com.example.splityourbills.entity.TransactionDetails;
 
 import java.util.Date;
@@ -12,6 +13,14 @@ public class TransactionResponse {
     private Date lastUpdated;
 
     public TransactionResponse() {
+    }
+
+    public TransactionResponse(Transaction transaction) {
+        this.transactionId = transaction.getTransactionId();
+        this.spaceId = transaction.getSpaceId();
+        this.transactionName = transaction.getTransactionName();
+        this.transactionDescription = transaction.getTransactionDescription();
+        this.lastUpdated = transaction.getLastUpdated();
     }
 
     public void setTransactionId(Long transactionId) {

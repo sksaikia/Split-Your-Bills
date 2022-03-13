@@ -13,6 +13,18 @@ public class Transaction {
     @Column(name="transaction_id")
     private Long transactionId;
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId +
+                ", spaceId=" + spaceId +
+                ", transactionName='" + transactionName + '\'' +
+                ", transactionDescription='" + transactionDescription + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", space=" + space +
+                '}';
+    }
+
     @Column(name="space_id")
     private Long spaceId;
 

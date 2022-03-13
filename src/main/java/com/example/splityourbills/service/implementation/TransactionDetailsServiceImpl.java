@@ -60,9 +60,14 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
     /**
      * Get all transaction details by space ID
      * */
+    //TODO need to add pagination
     @Override
     public GetAllTransactionResponse getAllTXNResponseBySpaceId(Long spaceId) {
+        List<TransactionDetails> txnDetails = transactionDetailsRepository.findAll();
 
+        for (TransactionDetails transactionDetails : txnDetails){
+
+        }
 
         return null;
     }
@@ -201,7 +206,8 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
                 transactionDetails.getPersonId(),
                 transactionDetails.getInviteId(),
                 transactionDetails.getAmount(),
-                transactionDetails.getTransaction().getLastUpdated()
+                transactionDetails.getTransaction().getLastUpdated(),
+                transactionDetails
 
         );
         return transactionDetailsResponse;
