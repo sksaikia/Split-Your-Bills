@@ -1,5 +1,7 @@
 package com.example.splityourbills.response.transaction;
 
+import com.example.splityourbills.entity.TransactionDetails;
+
 import java.util.Date;
 
 public class TransactionResponse {

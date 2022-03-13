@@ -1,5 +1,7 @@
 package com.example.splityourbills.response.transactionDetails;
 
+import com.example.splityourbills.entity.TransactionDetails;
+
 import java.util.Date;
 
 public class TransactionDetailsResponse {
@@ -9,6 +11,15 @@ public class TransactionDetailsResponse {
     private Long inviteId;
     private Long amount;
     private Date lastUodated;
+
+    public TransactionDetailsResponse(TransactionDetails transactionDetails) {
+        this.trasnactionDetailId = transactionDetails.getTransactionDetailsId();
+        this.transactionId = transactionDetails.getTransactionID();
+        this.personId = transactionDetails.getPersonId();
+        this.inviteId = transactionDetails.getInviteId();
+        this.amount = transactionDetails.getAmount();
+        this.lastUodated = transactionDetails.getLastUpdated();
+    }
 
     public Long getTrasnactionDetailId() {
         return trasnactionDetailId;

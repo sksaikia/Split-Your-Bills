@@ -23,6 +23,8 @@ import java.util.Optional;
 public interface TransactionDetailsRepository extends JpaRepository<TransactionDetails, Long> {
  //   Optional<List<TransactionDetails>> findBySpaceId(Long spaceId);
     Optional<List<TransactionDetails>> findByPersonId(Long personId);
+    Optional<List<TransactionDetails>> findByInviteId(Long inviteId);
     Optional<List<TransactionDetails>> findByTransactionID(Long transactionId);
  //   Optional<List<TransactionDetails>> findBYSpaceIdAndPersonId(Long spaceId, Long personId);
+    Optional<TransactionDetails> findByTransactionDetailsId(Long transactionDetailsId);
 }

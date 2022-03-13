@@ -1,6 +1,8 @@
 package com.example.splityourbills.entity;
 
 
+import com.example.splityourbills.dto.transactiondetails.TransactionDetailsDTO;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -24,9 +26,21 @@ public class TransactionDetails{
     @Column(name = "amount")
     private Long amount;
 
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date lastUpdated;
+
+    public TransactionDetails(TransactionDetailsDTO transactionDTO) {
+
+    }
 
     @PrePersist
     private void onCreate(){
