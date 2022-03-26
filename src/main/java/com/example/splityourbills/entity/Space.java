@@ -27,7 +27,7 @@ public class Space {
     private Boolean isActive;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "last_updated",nullable = false)
     private Date lastUpdated;
 
     @PrePersist

@@ -10,9 +10,7 @@ import com.example.splityourbills.exception.custom_exceptions.common.ResourceNot
 import com.example.splityourbills.repository.TransactionDetailsRepository;
 import com.example.splityourbills.repository.TransactionRepository;
 import com.example.splityourbills.response.transaction.TransactionResponse;
-import com.example.splityourbills.response.transactionDetails.AddTransactionDetailResponse;
-import com.example.splityourbills.response.transactionDetails.GetAllTransactionResponse;
-import com.example.splityourbills.response.transactionDetails.TransactionDetailsResponse;
+import com.example.splityourbills.response.transactionDetails.*;
 import com.example.splityourbills.service.interfaces.TransactionDetailsService;
 import com.example.splityourbills.service.interfaces.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,14 +60,17 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
      * */
     //TODO need to add pagination
     @Override
-    public GetAllTransactionResponse getAllTXNResponseBySpaceId(Long spaceId) {
-        List<TransactionDetails> txnDetails = transactionDetailsRepository.findAll();
-
-        for (TransactionDetails transactionDetails : txnDetails){
-
+    public GetAllTransactionDetailsSpaceAndMemberResponse getAllTXNResponseBySpaceId(Long spaceId) {
+        Optional<List<TransactionDetailsSpaceAndMemberResponse>> optionalResponses =
+                transactionDetailsRepository.findBySpaceId(spaceId);
+        if(optionalResponses.isPresent()){
+            List<TransactionDetailsSpaceAndMemberResponse> responses = optionalResponses.get();
+            GetAllTransactionDetailsSpaceAndMemberResponse response =
+                    new GetAllTransactionDetailsSpaceAndMemberResponse(responses.size(),responses);
+            return response;
+        }else{
+            throw new ResourceNotFoundException("Details with TXn details id not found, space id : " + spaceId);
         }
-
-        return null;
     }
 
     /**
@@ -154,9 +155,18 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
      * Get a list of TXN Details Response by particular space and member id
      * */
     @Override
-    public GetAllTransactionResponse getAllTXNBySpaceAndMemberID(Long spaceId, Long userId) {
+    public GetAllTransactionDetailsSpaceAndMemberResponse getAllTXNBySpaceAndMemberID(Long spaceId, Long userId) {
 
-
+//        Optional<List<TransactionDetailsSpaceAndMemberResponse>> optionalResponses =
+//                transactionDetailsRepository.findBYSpaceIdAndPersonId(spaceId, userId);
+//        if(optionalResponses.isPresent()){
+//            List<TransactionDetailsSpaceAndMemberResponse> responses = optionalResponses.get();
+//            GetAllTransactionDetailsSpaceAndMemberResponse response =
+//                    new GetAllTransactionDetailsSpaceAndMemberResponse(responses.size(),responses);
+//            return response;
+//        }else{
+//            throw new ResourceNotFoundException("Details with TXn details id not found, space id : " + spaceId + " userId : " + userId);
+//        }
         return null;
     }
 

@@ -3,6 +3,7 @@ package com.example.splityourbills.service.interfaces;
 import com.example.splityourbills.dto.transactiondetails.TransactionDetailsDTO;
 import com.example.splityourbills.response.transaction.TransactionResponse;
 import com.example.splityourbills.response.transactionDetails.AddTransactionDetailResponse;
+import com.example.splityourbills.response.transactionDetails.GetAllTransactionDetailsSpaceAndMemberResponse;
 import com.example.splityourbills.response.transactionDetails.GetAllTransactionResponse;
 import com.example.splityourbills.response.transactionDetails.TransactionDetailsResponse;
 
@@ -20,12 +21,12 @@ import java.util.List;
  * **/
 public interface TransactionDetailsService {
     AddTransactionDetailResponse addNewTransactionDetail(List<TransactionDetailsDTO> transactionDetailsDTO);
-    GetAllTransactionResponse getAllTXNResponseBySpaceId(Long spaceId);
+    GetAllTransactionDetailsSpaceAndMemberResponse getAllTXNResponseBySpaceId(Long spaceId);
     GetAllTransactionResponse getAllTXNByMemberId(Long userId);
     GetAllTransactionResponse getAllTXNByInviteId(Long inviteId);
     GetAllTransactionResponse getAllTxnByTxnId(Long txnID);
     TransactionDetailsResponse getTXNByTXNDetailsID(Long txnDetailsID);
-    GetAllTransactionResponse getAllTXNBySpaceAndMemberID(Long spaceId,Long userId);
+    GetAllTransactionDetailsSpaceAndMemberResponse getAllTXNBySpaceAndMemberID(Long spaceId, Long userId);
     TransactionDetailsResponse updateTXNDetailsById(Long txnDetailsID,TransactionDetailsDTO transactionDetailsDTO);
     Boolean deleteTXNDetailsById(Long txnDetailsID);
 }

@@ -50,7 +50,7 @@ public class TransactionDetails{
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "last_updated",nullable = false)
     private Date lastUpdated;
 
     public TransactionDetails(TransactionDetailsDTO transactionDTO) {

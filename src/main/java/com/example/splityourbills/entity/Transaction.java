@@ -3,7 +3,9 @@ package com.example.splityourbills.entity;
 import com.example.splityourbills.dto.transaction.TransactionDTO;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="transactions")
@@ -35,8 +37,31 @@ public class Transaction {
     private String transactionDescription;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "last_updated",nullable = false)
     private Date lastUpdated;
+
+//    public TransactionDetails getTransactionDetails() {
+//        return transactionDetails;
+//    }
+//
+//    public void setTransactionDetails(TransactionDetails transactionDetails) {
+//        this.transactionDetails = transactionDetails;
+//    }
+
+//    @OneToMany()
+//    @JoinColumn(name="transaction_id")
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<TransactionDetails> transactionDetails;
+
+
+    public List<TransactionDetails> getTransactionDetails(){
+        return this.transactionDetails;
+    }
+
+    public void setTransactionDetails(List<TransactionDetails> transactionDetails) {
+        this.transactionDetails = transactionDetails;
+    }
+
 
     public Transaction(TransactionDTO transactionDTO) {
         this.spaceId = transactionDTO.getSpaceId();

@@ -7,6 +7,7 @@ import com.example.splityourbills.dto.transactiondetails.TransactionDetailsDTO;
 import com.example.splityourbills.exception.custom_exceptions.common.InternalServerException;
 import com.example.splityourbills.response.transaction.TransactionResponse;
 import com.example.splityourbills.response.transactionDetails.AddTransactionDetailResponse;
+import com.example.splityourbills.response.transactionDetails.GetAllTransactionDetailsSpaceAndMemberResponse;
 import com.example.splityourbills.response.transactionDetails.GetAllTransactionResponse;
 import com.example.splityourbills.response.transactionDetails.TransactionDetailsResponse;
 import com.example.splityourbills.service.implementation.TransactionDetailsServiceImpl;
@@ -37,9 +38,16 @@ public class TransactionDetailsController {
         }
     }
 
+    //TODO test this
     @GetMapping()
     public BaseApiResponse getAllTXNBySpaceId(@RequestParam Long spaceId){
-        return null;
+
+        GetAllTransactionDetailsSpaceAndMemberResponse response =  transactionDetailsService.getAllTXNResponseBySpaceId(spaceId);
+        if (response!=null){
+            return createBaseApiResponse(response);
+        }else{
+            throw new InternalServerException("Unexpected error occured");
+        }
     }
 
     @GetMapping("/user")
@@ -52,6 +60,7 @@ public class TransactionDetailsController {
         }
     }
 
+    //TODO test this
     @GetMapping("/invite/")
     public BaseApiResponse getAllTXNByInviteId(@RequestParam Long inviteId){
         GetAllTransactionResponse response =  transactionDetailsService.getAllTXNByInviteId(inviteId);
@@ -86,7 +95,7 @@ public class TransactionDetailsController {
     @GetMapping("/all")
     public BaseApiResponse getAllTXNBySpaceAndMemberID(@RequestParam Long spaceId,
                                                        @RequestParam Long userId){
-        GetAllTransactionResponse response =  transactionDetailsService.getAllTXNBySpaceAndMemberID(spaceId,userId);
+        GetAllTransactionDetailsSpaceAndMemberResponse response =  transactionDetailsService.getAllTXNBySpaceAndMemberID(spaceId,userId);
         if (response!=null){
             return createBaseApiResponse(response);
         }else{
