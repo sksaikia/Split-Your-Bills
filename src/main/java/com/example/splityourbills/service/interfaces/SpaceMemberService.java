@@ -19,8 +19,9 @@ public interface SpaceMemberService{
     GetAllSpaceMembersResponse getAllMembersbySpaceId(long spaceId);
     GetAllSpaceMembersResponse getAllSpacesByUserId(long userId);
     GetAllSpaceMembersResponse getAllSpacesByInviteId(long inviteId);
-    void deleteMemberInSpace(long spaceId,long userId);
-    void deleteInviteInSpace(long spaceId,long inviteId);
+//    void deleteMemberInSpace(long spaceId,long userId);
+//    void deleteInviteInSpace(long spaceId,long inviteId);
+    Boolean deleteById(long id);
     AddMemberToSpaceResponse addOrInviteMemberToSpace(List<NewSpaceMemberDTO> spaceMemberDTOS);
     SpaceMemberResponse findBySpaceIdAndPersonId(Long spaceId, Long personId);
     SpaceMemberResponse findByParticularId(Long spaceMemberId);

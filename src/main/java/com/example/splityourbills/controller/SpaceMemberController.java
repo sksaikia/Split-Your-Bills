@@ -1,6 +1,7 @@
 package com.example.splityourbills.controller;
 
 import com.example.splityourbills.common.BaseApiResponse;
+import com.example.splityourbills.dto.auth.ApiResponse;
 import com.example.splityourbills.dto.space.SpaceDTO;
 import com.example.splityourbills.dto.spacemember.NewSpaceMemberDTO;
 import com.example.splityourbills.exception.custom_exceptions.common.InternalServerException;
@@ -14,18 +15,11 @@ import com.example.splityourbills.security.UserPrincipal;
 import com.example.splityourbills.service.implementation.SpaceMemberServiceImpl;
 import com.example.splityourbills.service.implementation.SpaceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Add or invite into space
- * Get members by space id - divide it by invites/present or not
- * Get details by userId
- * Get Details by inviteId
- * Delete person by Person id
- * Delete person by Invite id
- * **/
 
 @RestController
 @RequestMapping("/api/spaces/member")
@@ -74,6 +68,27 @@ public class SpaceMemberController {
             throw new ResourceNotFoundException("Details does not exist");
         }
     }
+
+    @GetMapping("/invite")
+    public BaseApiResponse getAllSpaceMemberDetailsByInviteId(@RequestParam Long inviteId){
+        GetAllSpaceMembersResponse response = spaceMemberService.getAllSpacesByInviteId(inviteId);
+        if (response!=null){
+            return createBaseApiResponse(response);
+        }else{
+            throw new ResourceNotFoundException("Space does not exist");
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public BaseApiResponse deleteSpaceMemberDetailById(@RequestParam Long id){
+        Boolean state = spaceMemberService.deleteById(id);
+        if (true){
+            return createBaseApiResponse(new ApiResponse(true,"Record deleted", HttpStatus.OK));
+        }else{
+            throw new ResourceNotFoundException("Space does not exist");
+        }
+    }
+
 
     private <DT> BaseApiResponse<DT> createBaseApiResponse(DT data){
         BaseApiResponse<DT> baseApiResponse = new BaseApiResponse<>(true);

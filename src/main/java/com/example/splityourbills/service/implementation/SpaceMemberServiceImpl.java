@@ -149,40 +149,51 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
     }
 
     @Override
-    public void deleteMemberInSpace(long spaceId, long personId) {
-        Optional<SpaceMembers> optionalSpaceMembers =
-                spaceMemberRepository.findBySpaceIdAndPersonId(spaceId,personId);
-
+    public Boolean deleteById(long id) {
+        Optional<SpaceMembers> optionalSpaceMembers = spaceMemberRepository.findById(id);
         if (optionalSpaceMembers.isPresent()){
-            long id = optionalSpaceMembers.get().getSpaceMemberId();
-            //TODO how to throw exception
-            if (spaceMemberRepository.existsBySpaceId(id)){
-                spaceMemberRepository.deleteById(id);
-            }
-            else{
-                throw new ResourceNotFoundException("Space with the given id not found, spaceMember id : " + id);
-            }
+            spaceMemberRepository.deleteById(id);
+            return true;
         }else{
-            throw new ResourceNotFoundException("Space with the given ids not found, spaceId : "
-                    + spaceId + " and person id : " + personId);
+            throw new ResourceNotFoundException("Member details not found with that particular id : " + id);
         }
     }
 
-    //TODO implement this
-    @Override
-    public void deleteInviteInSpace(long spaceId, long inviteId) {
+//    @Override
+//    public void deleteMemberInSpace(long spaceId, long personId) {
 //        Optional<SpaceMembers> optionalSpaceMembers =
-//                spaceMemberRepository.findAllByInviteId(inviteId);
+//                spaceMemberRepository.findBySpaceIdAndPersonId(spaceId,personId);
 //
 //        if (optionalSpaceMembers.isPresent()){
-//            long id = optionalSpaceMembers.get().getId();
-//            long inv = optionalSpaceMembers.get().getInviteId();
-//            spaceMembersRepository.deleteById(id);
-//            inviteRepository.deleteById(inv);
+//            long id = optionalSpaceMembers.get().getSpaceMemberId();
+//            //TODO how to throw exception
+//            if (spaceMemberRepository.existsBySpaceId(id)){
+//                spaceMemberRepository.deleteById(id);
+//            }
+//            else{
+//                throw new ResourceNotFoundException("Space with the given id not found, spaceMember id : " + id);
+//            }
 //        }else{
-//            //TODO throw exception
+//            throw new ResourceNotFoundException("Space with the given ids not found, spaceId : "
+//                    + spaceId + " and person id : " + personId);
 //        }
-    }
+//    }
+
+//    //TODO implement this
+//    @Override
+//    public void deleteInviteInSpace(long spaceId, long inviteId) {
+////        Optional<SpaceMembers> optionalSpaceMembers =
+////                spaceMemberRepository.findAllByInviteId(inviteId);
+////
+////        if (optionalSpaceMembers.isPresent()){
+////            long id = optionalSpaceMembers.get().getId();
+////            long inv = optionalSpaceMembers.get().getInviteId();
+////            spaceMembersRepository.deleteById(id);
+////            inviteRepository.deleteById(inv);
+////        }else{
+////            //TODO throw exception
+////        }
+//    }
 
     //TODO add some exception in case of error
     public void addSpaceCreatorToMemberList(SpaceMembersDTO spaceMembersDTO) {
