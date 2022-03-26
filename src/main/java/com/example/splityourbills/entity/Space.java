@@ -5,6 +5,7 @@ import com.example.splityourbills.dto.space.SpaceDTO;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="space")
@@ -35,6 +36,19 @@ public class Space {
         lastUpdated = new Date();
     }
 
+    public List<SpaceMembers> getSpaceMembersList() {
+        return spaceMembersList;
+    }
+
+    public void setSpaceMembersList(List<SpaceMembers> spaceMembersList) {
+        this.spaceMembersList = spaceMembersList;
+    }
+
+    @OneToMany(mappedBy = "space",orphanRemoval = true,cascade = CascadeType.ALL)
+    private List<SpaceMembers> spaceMembersList;
+
+
+    //TODO review this
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private User user;

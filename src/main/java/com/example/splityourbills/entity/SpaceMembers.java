@@ -1,6 +1,8 @@
 package com.example.splityourbills.entity;
 
 import com.example.splityourbills.dto.spacemember.SpaceMembersDTO;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,6 +30,19 @@ public class SpaceMembers{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_updated",nullable = false)
     private Date lastUpdated;
+
+    @ManyToOne
+    @JoinColumn(name = "space_id", referencedColumnName = "space_id",insertable = false,updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Space space;
+
+    public Space getSpace() {
+        return space;
+    }
+
+    public void setSpace(Space space) {
+        this.space = space;
+    }
 
     @PrePersist
     private void onCreate(){

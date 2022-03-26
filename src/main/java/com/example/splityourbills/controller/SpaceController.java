@@ -1,6 +1,7 @@
 package com.example.splityourbills.controller;
 
 import com.example.splityourbills.common.BaseApiResponse;
+import com.example.splityourbills.dto.auth.ApiResponse;
 import com.example.splityourbills.exception.custom_exceptions.common.InternalServerException;
 import com.example.splityourbills.dto.space.SpaceDTO;
 import com.example.splityourbills.exception.custom_exceptions.common.ResourceNotFoundException;
@@ -10,6 +11,7 @@ import com.example.splityourbills.security.CurrentUser;
 import com.example.splityourbills.security.UserPrincipal;
 import com.example.splityourbills.service.implementation.SpaceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -56,10 +58,20 @@ public class SpaceController {
         }
     }
 
-    private BaseApiResponse createBaseApiResponse(SpaceResponse spaceResponse){
-        BaseApiResponse baseApiResponse = new BaseApiResponse(true);
-        baseApiResponse.setData(spaceResponse);
-        return baseApiResponse;
+
+    @DeleteMapping()
+    public BaseApiResponse deleteSpaceById(@RequestParam Long spaceId){
+        Boolean state = spaceService.deleteSpace(spaceId);
+        if (state){
+            return createBaseApiResponse(new ApiResponse(true,"Record deleted", HttpStatus.OK));
+        }else{
+            throw new InternalServerException("Problems editing the space");
+        }
     }
 
+    private <DT> BaseApiResponse<DT> createBaseApiResponse(DT data){
+        BaseApiResponse<DT> baseApiResponse = new BaseApiResponse<>(true);
+        baseApiResponse.setData(data);
+        return baseApiResponse;
+    }
 }

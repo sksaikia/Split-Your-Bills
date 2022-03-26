@@ -103,6 +103,17 @@ public class SpaceServiceImpl implements SpaceService {
 
     }
 
+    @Override
+    public Boolean deleteSpace(Long spaceId) {
+        Optional<Space> optionalSpace = spaceRepository.findById(spaceId);
+        if (optionalSpace.isPresent()){
+            spaceRepository.deleteById(spaceId);
+            return true;
+        }else{
+            throw new ResourceNotFoundException("This current space is not available");
+        }
+    }
+
     private SpaceResponse createSpaceResponse(long currentSpaceId, Space currentSpace) {
         SpaceResponse spaceResponse = new SpaceResponse(currentSpaceId, currentSpace.getPersonId(), currentSpace.getSpaceName(),currentSpace.getSpaceDescription(),true,currentSpace.getLastUpdated());
         return spaceResponse;

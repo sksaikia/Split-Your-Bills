@@ -8,4 +8,5 @@ public interface SpaceService {
     SpaceResponse createNewSpace(SpaceDTO spaceModel,Long userId);
     SpaceResponse getSpaceById(Long spaceId);
     SpaceResponse editSpace(SpaceDTO space,long spaceId,long userId);
+    Boolean deleteSpace(Long spaceId);
 }
