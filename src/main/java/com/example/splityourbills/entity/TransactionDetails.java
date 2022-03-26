@@ -2,6 +2,8 @@ package com.example.splityourbills.entity;
 
 
 import com.example.splityourbills.dto.transactiondetails.TransactionDetailsDTO;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -67,6 +69,7 @@ public class TransactionDetails{
 
     @ManyToOne
     @JoinColumn(name = "transaction_id", referencedColumnName = "transaction_id",insertable = false,updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Transaction transaction;
 
     @ManyToOne

@@ -50,7 +50,7 @@ public class Transaction {
 
 //    @OneToMany()
 //    @JoinColumn(name="transaction_id")
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "transaction",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<TransactionDetails> transactionDetails;
 
 

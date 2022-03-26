@@ -30,6 +30,16 @@ public class TransactionController {
         }
     }
 
+    @DeleteMapping()
+    public BaseApiResponse deleteTransactionById(@RequestParam Long transactionId){
+        Boolean state = transactionService.deleteTransaction(transactionId);
+        if (state){
+            return createBaseApiResponse(new ApiResponse(true,"Record deleted", HttpStatus.OK));
+        }else{
+            throw new InternalServerException("Problems deleting the transaction");
+        }
+    }
+
     private <DT> BaseApiResponse<DT> createBaseApiResponse(DT data){
         BaseApiResponse<DT> baseApiResponse = new BaseApiResponse<>(true);
         baseApiResponse.setData(data);

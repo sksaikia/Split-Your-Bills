@@ -35,6 +35,17 @@ public class TransactionServiceImpl implements TransactionService {
         return createTransactionResponse(transactionId,transaction);
     }
 
+    @Override
+    public Boolean deleteTransaction(Long transactionId) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findByTransactionId(transactionId);
+        if (optionalTransaction.isPresent()){
+            transactionRepository.deleteById(transactionId);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     private Transaction getTransactionFromDTO(TransactionDTO transactionDTO) {
         Transaction transaction = new Transaction(transactionDTO);
         return transaction;
