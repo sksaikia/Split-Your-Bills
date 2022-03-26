@@ -157,17 +157,16 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
     @Override
     public GetAllTransactionDetailsSpaceAndMemberResponse getAllTXNBySpaceAndMemberID(Long spaceId, Long userId) {
 
-//        Optional<List<TransactionDetailsSpaceAndMemberResponse>> optionalResponses =
-//                transactionDetailsRepository.findBYSpaceIdAndPersonId(spaceId, userId);
-//        if(optionalResponses.isPresent()){
-//            List<TransactionDetailsSpaceAndMemberResponse> responses = optionalResponses.get();
-//            GetAllTransactionDetailsSpaceAndMemberResponse response =
-//                    new GetAllTransactionDetailsSpaceAndMemberResponse(responses.size(),responses);
-//            return response;
-//        }else{
-//            throw new ResourceNotFoundException("Details with TXn details id not found, space id : " + spaceId + " userId : " + userId);
-//        }
-        return null;
+        Optional<List<TransactionDetailsSpaceAndMemberResponse>> optionalResponses =
+                transactionDetailsRepository.findBYSpaceIdAndPersonId(spaceId, userId);
+        if(optionalResponses.isPresent()){
+            List<TransactionDetailsSpaceAndMemberResponse> responses = optionalResponses.get();
+            GetAllTransactionDetailsSpaceAndMemberResponse response =
+                    new GetAllTransactionDetailsSpaceAndMemberResponse(responses.size(),responses);
+            return response;
+        }else{
+            throw new ResourceNotFoundException("Details with TXn details id not found, space id : " + spaceId + " userId : " + userId);
+        }
     }
 
     /**

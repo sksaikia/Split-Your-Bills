@@ -38,7 +38,6 @@ public class TransactionDetailsController {
         }
     }
 
-    //TODO test this
     @GetMapping()
     public BaseApiResponse getAllTXNBySpaceId(@RequestParam Long spaceId){
 
@@ -61,9 +60,9 @@ public class TransactionDetailsController {
     }
 
     //TODO test this
-    @GetMapping("/invite/")
-    public BaseApiResponse getAllTXNByInviteId(@RequestParam Long inviteId){
-        GetAllTransactionResponse response =  transactionDetailsService.getAllTXNByInviteId(inviteId);
+    @GetMapping("/invites")
+    public BaseApiResponse getAllTXNByInviteId(@RequestParam Long userInviteId){
+        GetAllTransactionResponse response =  transactionDetailsService.getAllTXNByInviteId(userInviteId);
         if (response!=null){
             return createBaseApiResponse(response);
         }else{
