@@ -4,6 +4,7 @@ import com.example.splityourbills.common.BaseApiResponse;
 import com.example.splityourbills.dto.auth.ApiResponse;
 import com.example.splityourbills.dto.space.SpaceDTO;
 import com.example.splityourbills.dto.spacemember.NewSpaceMemberDTO;
+import com.example.splityourbills.dto.spacemember.SetJoinedInvitedDTO;
 import com.example.splityourbills.exception.custom_exceptions.common.InternalServerException;
 import com.example.splityourbills.exception.custom_exceptions.common.ResourceNotFoundException;
 import com.example.splityourbills.response.space.SpaceResponse;
@@ -27,6 +28,9 @@ public class SpaceMemberController {
 
     @Autowired
     SpaceMemberServiceImpl spaceMemberService;
+
+    @Autowired
+    UserController userController;
 
     @PostMapping("/add")
     public BaseApiResponse addOrInviteMemberIntoSpace(@RequestBody List<NewSpaceMemberDTO> spaceDTO){
@@ -89,7 +93,19 @@ public class SpaceMemberController {
         }
     }
 
+    @PutMapping("/joined")
+    public BaseApiResponse setJoinedForInvite(@RequestBody SetJoinedInvitedDTO setJoinedInvitedDTO,
+                                              @CurrentUser UserPrincipal currentUser) {
 
+        long userId = userController.getCurrentUserId(currentUser);
+        Boolean state = spaceMemberService.setJoinedForInvitedUser(setJoinedInvitedDTO,userId);
+        if (state){
+            return createBaseApiResponse(new ApiResponse(true,"Records edited", HttpStatus.OK));
+        }else{
+            throw new ResourceNotFoundException("Internal server Error ");
+        }
+
+    }
     private <DT> BaseApiResponse<DT> createBaseApiResponse(DT data){
         BaseApiResponse<DT> baseApiResponse = new BaseApiResponse<>(true);
         baseApiResponse.setData(data);

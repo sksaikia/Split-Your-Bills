@@ -46,6 +46,26 @@ public class TransactionServiceImpl implements TransactionService {
         }
     }
 
+    @Override
+    public TransactionResponse editTransaction(TransactionDTO transactionDTO, Long transactionId) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
+
+        if (optionalTransaction.isPresent()){
+
+            Transaction transaction = optionalTransaction.get();
+            transaction.setTransactionName(transactionDTO.getTransactionName());
+            transaction.setTransactionDescription(transaction.getTransactionDescription());
+            transactionRepository.save(transaction);
+            long currentTransactionId = transaction.getTransactionId();
+            return createTransactionResponse(currentTransactionId,transaction);
+
+        }else{
+            //TODO throw exception
+            throw new ResourceNotFoundException("This current space is not available");
+        }
+
+    }
+
     private Transaction getTransactionFromDTO(TransactionDTO transactionDTO) {
         Transaction transaction = new Transaction(transactionDTO);
         return transaction;

@@ -7,4 +7,5 @@ import com.example.splityourbills.response.transactionDetails.TransactionDetails
 public interface TransactionService {
     TransactionResponse addTransaction(TransactionDTO transactionDTO);
     Boolean deleteTransaction(Long transactionId);
+    TransactionResponse editTransaction(TransactionDTO transactionDTO,Long transactionId);
 }

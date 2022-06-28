@@ -2,6 +2,7 @@ package com.example.splityourbills.service.interfaces;
 
 import com.example.splityourbills.dto.space.SpaceDTO;
 import com.example.splityourbills.dto.spacemember.NewSpaceMemberDTO;
+import com.example.splityourbills.dto.spacemember.SetJoinedInvitedDTO;
 import com.example.splityourbills.dto.spacemember.SpaceMembersDTO;
 import com.example.splityourbills.entity.SpaceMembers;
 import com.example.splityourbills.response.space.GetAllSpaceResponse;
@@ -25,4 +26,5 @@ public interface SpaceMemberService{
     AddMemberToSpaceResponse addOrInviteMemberToSpace(List<NewSpaceMemberDTO> spaceMemberDTOS);
     SpaceMemberResponse findBySpaceIdAndPersonId(Long spaceId, Long personId);
     SpaceMemberResponse findByParticularId(Long spaceMemberId);
+    Boolean setJoinedForInvitedUser(SetJoinedInvitedDTO spaceMemberIds,Long userId);
 }

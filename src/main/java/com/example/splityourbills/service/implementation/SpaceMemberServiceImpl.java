@@ -2,11 +2,9 @@ package com.example.splityourbills.service.implementation;
 
 import com.example.splityourbills.common.Constants;
 import com.example.splityourbills.dto.spacemember.NewSpaceMemberDTO;
+import com.example.splityourbills.dto.spacemember.SetJoinedInvitedDTO;
 import com.example.splityourbills.dto.spacemember.SpaceMembersDTO;
-import com.example.splityourbills.entity.Invite;
-import com.example.splityourbills.entity.Space;
-import com.example.splityourbills.entity.SpaceMembers;
-import com.example.splityourbills.entity.User;
+import com.example.splityourbills.entity.*;
 import com.example.splityourbills.exception.custom_exceptions.common.ResourceNotFoundException;
 import com.example.splityourbills.repository.SpaceMemberRepository;
 import com.example.splityourbills.repository.UserRepository;
@@ -254,6 +252,29 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
         }else{
             throw new ResourceNotFoundException("Details not found, id : " + spaceMemberId);
         }
+    }
+
+    @Override
+    public Boolean setJoinedForInvitedUser(SetJoinedInvitedDTO setJoinedInvitedDTO,Long userId) {
+        List<Long> spaceMemberIds = setJoinedInvitedDTO.getList();
+        for(Long id : spaceMemberIds){
+            setJoinedForInvitedUser(id,userId);
+        }
+        return true;
+    }
+
+    public void setJoinedForInvitedUser(Long spaceMemberId,Long userId){
+
+        Optional<SpaceMembers> optionalSpaceMembers = spaceMemberRepository.findById(spaceMemberId);
+        if (optionalSpaceMembers.isPresent()){
+            SpaceMembers spaceMember = optionalSpaceMembers.get();
+            spaceMember.setJoined(true);
+            spaceMember.setPersonId(userId);
+            spaceMemberRepository.save(spaceMember);
+        }else{
+
+        }
+
     }
 }
 

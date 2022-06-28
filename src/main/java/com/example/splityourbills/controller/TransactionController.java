@@ -40,6 +40,19 @@ public class TransactionController {
         }
     }
 
+    @PutMapping("/update")
+    public BaseApiResponse editTransaction(@RequestBody TransactionDTO transactionDTO,
+                                           @RequestParam Long transactionId){
+        TransactionResponse response =
+                transactionService.editTransaction(transactionDTO, transactionId);
+        if (response!=null){
+            return createBaseApiResponse(response);
+        }else{
+            throw new InternalServerException("Problems editing the transaction");
+        }
+
+    }
+
     private <DT> BaseApiResponse<DT> createBaseApiResponse(DT data){
         BaseApiResponse<DT> baseApiResponse = new BaseApiResponse<>(true);
         baseApiResponse.setData(data);
