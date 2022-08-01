@@ -62,36 +62,12 @@ class CustomControllerAdvice {
     }
 
 
-    // fallback method
-    @ExceptionHandler(Exception.class) // exception handled
-    public ResponseEntity<ErrorResponse> handleExceptions(
-            Exception e
-    ) {
-        //TODO test this once
-        HttpStatus status = HttpStatus.UNAUTHORIZED; // 401
-
-        // converting the stack trace to String
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
-        e.printStackTrace(printWriter);
-        String stackTrace = stringWriter.toString();
-
-        return new ResponseEntity<>(
-                new ErrorResponse(
-                        status,
-                        e.getMessage(),
-                        stackTrace // specifying the stack trace in case of 500s
-                ),
-                status
-        );
-    }
-
-
     /***
      * When there is a conflict of data, use cases-
      * 1. While registering the user, if we use already existing phone number
      *
      * ***/
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(CustomDataConflictException.class)
     public BaseApiResponse handleCustomDataNotFoundExceptions(
             Exception e
@@ -106,7 +82,7 @@ class CustomControllerAdvice {
         ErrorResponse er = new ErrorResponse(
                 status,
                 e.getMessage(),
-                stackTrace,
+                stackTrace.substring(0,30),
                 false
         );
         return new BaseApiResponse(false, null, er);
@@ -182,6 +158,33 @@ class CustomControllerAdvice {
                 status
         );
     }
+
+
+    // fallback method
+    @ExceptionHandler(Exception.class) // exception handled
+    public ResponseEntity<ErrorResponse> handleExceptions(
+            Exception e
+    ) {
+        //TODO test this once
+        HttpStatus status = HttpStatus.UNAUTHORIZED; // 401
+
+        // converting the stack trace to String
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        e.printStackTrace(printWriter);
+        String stackTrace = stringWriter.toString();
+
+        return new ResponseEntity<>(
+                new ErrorResponse(
+                        status,
+                        e.getMessage(),
+                        stackTrace // specifying the stack trace in case of 500s
+                ),
+                status
+        );
+    }
+
+
 
 
 }
