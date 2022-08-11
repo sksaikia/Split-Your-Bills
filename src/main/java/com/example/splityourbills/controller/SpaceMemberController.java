@@ -106,6 +106,19 @@ public class SpaceMemberController {
         }
 
     }
+
+    @GetMapping("/getallspaces")
+    public BaseApiResponse getAllSpacesByUserId(@RequestParam Long userId,
+                                                @CurrentUser UserPrincipal currentUser) {
+        GetAllSpaceMembersResponse response = spaceMemberService.getAllSpacesByUserId(userId);
+        if (response!=null){
+            return createBaseApiResponse(response);
+        }else{
+            throw new ResourceNotFoundException("Space does not exist");
+        }
+    }
+
+
     private <DT> BaseApiResponse<DT> createBaseApiResponse(DT data){
         BaseApiResponse<DT> baseApiResponse = new BaseApiResponse<>(true);
         baseApiResponse.setData(data);

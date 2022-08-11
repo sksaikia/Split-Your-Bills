@@ -37,7 +37,7 @@ public class SpaceServiceImpl implements SpaceService {
         Space space = getSpaceFromDTO(spaceDTO,userId);
         spaceRepository.save(space);
         long spaceId = space.getSpaceId();
-        addUserToMembersList(new SpaceMembersDTO(spaceId,userId,0L,""));
+        addUserToMembersList(new SpaceMembersDTO(spaceId,userId,-1L,""));
         return createSpaceResponse(spaceId,space);
     }
 
