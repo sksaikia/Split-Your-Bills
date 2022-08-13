@@ -115,7 +115,7 @@ public class SpaceServiceImpl implements SpaceService {
     }
 
     private SpaceResponse createSpaceResponse(long currentSpaceId, Space currentSpace) {
-        SpaceResponse spaceResponse = new SpaceResponse(currentSpaceId, currentSpace.getPersonId(), currentSpace.getSpaceName(),currentSpace.getSpaceDescription(),true,currentSpace.getLastUpdated());
+        SpaceResponse spaceResponse = new SpaceResponse(currentSpaceId, currentSpace.getPersonId(), currentSpace.getSpaceName(),currentSpace.getSpaceDescription(),true,currentSpace.getLastUpdated(), currentSpace.getUser());
         return spaceResponse;
     }
 
@@ -123,7 +123,7 @@ public class SpaceServiceImpl implements SpaceService {
     private SpaceResponse getSpaceResponseFromSpace(Space space){
         SpaceResponse spaceResponse = new SpaceResponse(space.getSpaceId(),space.getPersonId(),
                 space.getSpaceName(),space.getSpaceDescription(),space.getActive(),
-                space.getLastUpdated());
+                space.getLastUpdated(), space.getUser());
         return spaceResponse;
     }
 

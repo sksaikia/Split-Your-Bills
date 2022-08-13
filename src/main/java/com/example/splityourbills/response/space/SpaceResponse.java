@@ -47,13 +47,17 @@ public class SpaceResponse {
         this.userResponse = userResponse;
     }
 
-    public SpaceResponse(Long spaceId, Long personId, String spaceName, String spaceDescription, Boolean isActive, Date lastUpdated) {
+    public SpaceResponse(Long spaceId, Long personId, String spaceName, String spaceDescription, Boolean isActive,
+                         Date lastUpdated, User userResponse) {
         this.spaceId = spaceId;
         this.personId = personId;
         this.spaceName = spaceName;
         this.spaceDescription = spaceDescription;
         this.isActive = isActive;
         this.lastUpdated = lastUpdated;
+        this.userResponse = new UserResponse(userResponse.getPhoneNo(),
+                userResponse.getUserName(),
+                userResponse.getUserId());
     }
 
     public SpaceResponse() {
@@ -66,7 +70,7 @@ public class SpaceResponse {
         this.spaceName = space.getSpaceName();
         this.spaceDescription = space.getSpaceDescription();
         this.lastUpdated = space.getLastUpdated();
-        this.userResponse = new UserResponse(space.getUser());
+        this.userResponse = getUserResponse();
     }
 
     public Long getSpaceId() {
