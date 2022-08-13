@@ -1,5 +1,9 @@
 package com.example.splityourbills.response.space;
 
+import com.example.splityourbills.entity.Space;
+import com.example.splityourbills.entity.User;
+import com.example.splityourbills.response.auth.UserResponse;
+
 import java.util.Date;
 
 public class SpaceResponse {
@@ -9,6 +13,39 @@ public class SpaceResponse {
     private String spaceDescription;
     private Boolean isActive;
     private Date lastUpdated;
+    private UserResponse userResponse;
+
+    public void setSpaceId(Long spaceId) {
+        this.spaceId = spaceId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
+    }
+
+    public void setSpaceName(String spaceName) {
+        this.spaceName = spaceName;
+    }
+
+    public void setSpaceDescription(String spaceDescription) {
+        this.spaceDescription = spaceDescription;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public UserResponse getUserResponse() {
+        return userResponse;
+    }
+
+    public void setUserResponse(UserResponse userResponse) {
+        this.userResponse = userResponse;
+    }
 
     public SpaceResponse(Long spaceId, Long personId, String spaceName, String spaceDescription, Boolean isActive, Date lastUpdated) {
         this.spaceId = spaceId;
@@ -20,6 +57,16 @@ public class SpaceResponse {
     }
 
     public SpaceResponse() {
+    }
+
+    public SpaceResponse(Space space) {
+        this.isActive = space.getActive();
+        this.spaceId = space.getSpaceId();
+        this.personId = space.getPersonId();
+        this.spaceName = space.getSpaceName();
+        this.spaceDescription = space.getSpaceDescription();
+        this.lastUpdated = space.getLastUpdated();
+        this.userResponse = new UserResponse(space.getUser());
     }
 
     public Long getSpaceId() {

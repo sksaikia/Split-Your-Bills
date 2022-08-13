@@ -5,6 +5,7 @@ import com.example.splityourbills.entity.SpaceMembers;
 import com.example.splityourbills.entity.User;
 import com.example.splityourbills.response.auth.UserResponse;
 import com.example.splityourbills.response.invite.InviteResponse;
+import com.example.splityourbills.response.space.SpaceResponse;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
@@ -15,11 +16,20 @@ import java.util.Date;
 public class SpaceMemberResponse {
     private Long spaceMemberId;
     private Long spaceId;
+    private SpaceResponse spaceResponse;
     private Long personId;
     private Boolean isJoined;
     private UserResponse userDetails;
     private Long inviteId;
     private InviteResponse invite;
+
+    public SpaceResponse getSpaceResponse() {
+        return spaceResponse;
+    }
+
+    public void setSpaceResponse(SpaceResponse spaceResponse) {
+        this.spaceResponse = spaceResponse;
+    }
 
     public UserResponse getUserDetails() {
         return userDetails;
@@ -102,6 +112,7 @@ public class SpaceMemberResponse {
             this.invite = new InviteResponse(spaceMembers.getInvite());
         if (personId!=Constants.ERROR_STATE_MEMBERS)
             this.userDetails = new UserResponse(spaceMembers.getUser());
+        this.spaceResponse = new SpaceResponse(spaceMembers.getSpace());
     }
 
 }
