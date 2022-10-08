@@ -132,7 +132,7 @@ public class TransactionDetailsSpaceAndMemberResponse {
     public TransactionDetailsSpaceAndMemberResponse(Long transactionDetailId, Long transactionId, Long amount,
                                                     Long personId, Long inviteId, Date lastUpdated, Long spaceId, String transactionName,
                                                     String transactionDescription, String spaceName,
-                                                    String spaceDescription, String userName) {
+                                                    String spaceDescription, String userName, String inviteName) {
         this.transactionDetailId = transactionDetailId;
         this.transactionId = transactionId;
         this.amount = amount;

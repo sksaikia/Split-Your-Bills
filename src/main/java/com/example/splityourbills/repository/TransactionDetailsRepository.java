@@ -25,10 +25,10 @@ import java.util.Optional;
 public interface TransactionDetailsRepository extends JpaRepository<TransactionDetails, Long> {
 
     @Query(value = "SELECT new com.example.splityourbills.response.transactionDetails.TransactionDetailsSpaceAndMemberResponse( td.transactionDetailsId,td.transactionID,td.amount,td.personId,td.inviteId," +
-            "td.lastUpdated,t.spaceId,t.transactionName,t.transactionDescription , s.spaceName, s.spaceDescription, us.userName)" +
+            "td.lastUpdated,t.spaceId,t.transactionName,t.transactionDescription , s.spaceName, s.spaceDescription, us.userName , inv.inviteName)" +
             "FROM TransactionDetails td " +
             "join Transaction t on " +
-            "td.transactionID=t.transactionId join Space s on t.spaceId=s.spaceId join User us on td.personId=us.userId  where t.spaceId=?1")
+            "td.transactionID=t.transactionId join Space s on t.spaceId=s.spaceId join User us on td.personId=us.userId join Invite inv on td.inviteId=inv.inviteId where t.spaceId=?1")
     Optional<List<TransactionDetailsSpaceAndMemberResponse>> findBySpaceId(Long spaceId);
 
     Optional<List<TransactionDetails>> findByPersonId(Long personId);
@@ -39,10 +39,10 @@ public interface TransactionDetailsRepository extends JpaRepository<TransactionD
 
     //TODO fix this
     @Query(value = "SELECT new com.example.splityourbills.response.transactionDetails.TransactionDetailsSpaceAndMemberResponse( td.transactionDetailsId,td.transactionID,td.amount,td.personId,td.inviteId," +
-        "td.lastUpdated,t.spaceId,t.transactionName,t.transactionDescription , s.spaceName, s.spaceDescription, us.userName)" +
+        "td.lastUpdated,t.spaceId,t.transactionName,t.transactionDescription , s.spaceName, s.spaceDescription, us.userName, inv.inviteName)" +
         "FROM TransactionDetails td " +
         "join Transaction t on " +
-        "td.transactionID=t.transactionId join Space s on t.spaceId=s.spaceId join User us on td.personId=us.userId  where t.spaceId=?1")
+        "td.transactionID=t.transactionId join Space s on t.spaceId=s.spaceId join User us on td.personId=us.userId join Invite inv on td.inviteId=inv.inviteId where t.spaceId=?1 and td.personId=?2")
     Optional<List<TransactionDetailsSpaceAndMemberResponse>> findBYSpaceIdAndPersonId(Long spaceId, Long personId);
 
     Optional<TransactionDetails> findByTransactionDetailsId(Long transactionDetailsId);
