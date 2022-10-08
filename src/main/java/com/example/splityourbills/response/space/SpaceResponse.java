@@ -55,9 +55,11 @@ public class SpaceResponse {
         this.spaceDescription = spaceDescription;
         this.isActive = isActive;
         this.lastUpdated = lastUpdated;
-        this.userResponse = new UserResponse(userResponse.getPhoneNo(),
-                userResponse.getUserName(),
-                userResponse.getUserId());
+        if(userResponse!= null) {
+            this.userResponse = new UserResponse(userResponse.getPhoneNo(),
+                    userResponse.getUserName(),
+                    userResponse.getUserId());
+        }
     }
 
     public SpaceResponse() {

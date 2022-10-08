@@ -141,6 +141,7 @@ class CustomControllerAdvice {
     }
 
     @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     public ResponseEntity<Object> badRequest(HttpServletRequest req, Exception e) {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
         StringWriter stringWriter = new StringWriter();
