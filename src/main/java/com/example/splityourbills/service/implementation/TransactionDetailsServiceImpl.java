@@ -14,6 +14,7 @@ import com.example.splityourbills.response.transactionDetails.*;
 import com.example.splityourbills.service.interfaces.TransactionDetailsService;
 import com.example.splityourbills.service.interfaces.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -79,7 +80,7 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
     @Override
     public GetAllTransactionResponse getAllTXNByMemberId(Long userId) {
         Optional<List<TransactionDetails>> optionalTXNDetails = transactionDetailsRepository
-                .findByPersonId(userId);
+                .findByPersonId(userId, Sort.by(Sort.Direction.DESC, "lastUpdated"));
         if (optionalTXNDetails.isPresent()){
             List<TransactionDetails> txnDetails = optionalTXNDetails.get();
             List<TransactionDetailsResponse> transactionDetailsResponses = new ArrayList<>();

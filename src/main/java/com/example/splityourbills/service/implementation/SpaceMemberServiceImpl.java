@@ -13,6 +13,7 @@ import com.example.splityourbills.response.spaceMember.GetAllSpaceMembersRespons
 import com.example.splityourbills.response.spaceMember.SpaceMemberResponse;
 import com.example.splityourbills.service.interfaces.SpaceMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.scanner.Constant;
 
@@ -122,7 +123,8 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
     @Override
     public GetAllSpaceMembersResponse getAllSpacesByUserId(long userId) {
         Optional<List<SpaceMembers>> optionalSpaceMemberList =
-                spaceMemberRepository.findAllByPersonId(userId);
+                spaceMemberRepository.findAllByPersonId(userId,
+                        Sort.by(Sort.Direction.DESC, "lastUpdated"));
         if (optionalSpaceMemberList.isPresent()){
             List<SpaceMemberResponse> spaceMemberResponseList = convertSpaceMembersToResponse(optionalSpaceMemberList.get());
             return createAllSpaceMembersResponse(spaceMemberResponseList,spaceMemberResponseList.size());

@@ -4,6 +4,7 @@ package com.example.splityourbills.repository;
 import com.example.splityourbills.entity.Transaction;
 import com.example.splityourbills.entity.TransactionDetails;
 import com.example.splityourbills.response.transactionDetails.TransactionDetailsSpaceAndMemberResponse;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -31,7 +32,7 @@ public interface TransactionDetailsRepository extends JpaRepository<TransactionD
             "td.transactionID=t.transactionId join Space s on t.spaceId=s.spaceId join User us on td.personId=us.userId join Invite inv on td.inviteId=inv.inviteId where t.spaceId=?1")
     Optional<List<TransactionDetailsSpaceAndMemberResponse>> findBySpaceId(Long spaceId);
 
-    Optional<List<TransactionDetails>> findByPersonId(Long personId);
+    Optional<List<TransactionDetails>> findByPersonId(Long personId, Sort sort);
 
     Optional<List<TransactionDetails>> findByInviteId(Long inviteId);
 
