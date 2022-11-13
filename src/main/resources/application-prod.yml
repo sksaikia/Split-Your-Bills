@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: mysql://root:mboNikm0ZonVSVDimzAE@containers-us-west-108.railway.app:6484/railway
+    username: root
+    password: mboNikm0ZonVSVDimzAE
+    name: split-your-bills
