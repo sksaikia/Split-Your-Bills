@@ -43,6 +43,9 @@ public class TransactionDetails{
     @Column(name = "amount")
     private Long amount;
 
+    @Column(name = "payable_amount")
+    private Long payableAmount;
+
     public Date getLastUpdated() {
         return lastUpdated;
     }
@@ -60,6 +63,7 @@ public class TransactionDetails{
            this.personId = transactionDTO.getPersonId();
            this.inviteId = transactionDTO.getInviteId();
            this.amount = transactionDTO.getAmount();
+           this.payableAmount = transactionDTO.getPayableAmount();
     }
 
     @PrePersist
@@ -137,6 +141,14 @@ public class TransactionDetails{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getPayableAmount() {
+        return payableAmount;
+    }
+
+    public void setPayableAmount(Long payableAmount) {
+        this.payableAmount = payableAmount;
     }
 
     public Invite getInvite() {

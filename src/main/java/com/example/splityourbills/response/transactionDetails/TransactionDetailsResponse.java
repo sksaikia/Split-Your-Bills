@@ -18,6 +18,7 @@ public class TransactionDetailsResponse {
     private InviteResponse invite;
     private Long amount;
     private Date lastUpdated;
+    private Long payableAmount;
 
     public TransactionResponse getTransaction() {
         return transaction;
@@ -43,6 +44,14 @@ public class TransactionDetailsResponse {
         this.invite = invite;
     }
 
+    public Long getPayableAmount() {
+        return payableAmount;
+    }
+
+    public void setPayableAmount(Long payableAmount) {
+        this.payableAmount = payableAmount;
+    }
+
     public TransactionDetailsResponse(TransactionDetails transactionDetails) {
         this.trasnactionDetailId = transactionDetails.getTransactionDetailsId();
         this.transactionId = transactionDetails.getTransactionID();
@@ -50,6 +59,7 @@ public class TransactionDetailsResponse {
         this.inviteId = transactionDetails.getInviteId();
         this.amount = transactionDetails.getAmount();
         this.lastUpdated = transactionDetails.getLastUpdated();
+        this.payableAmount = transactionDetails.getPayableAmount();
         if (inviteId!= Constants.ERROR_STATE_MEMBERS)
             this.invite = new InviteResponse(transactionDetails.getInvite());
         if (personId!=Constants.ERROR_STATE_MEMBERS)
@@ -109,13 +119,14 @@ public class TransactionDetailsResponse {
     }
 
     public TransactionDetailsResponse(Long trasnactionDetailId, Long transactionId, Long personId, Long inviteId,
-                                      Long amount, Date lastUpdated, TransactionDetails transactionDetails) {
+                                      Long amount, Date lastUpdated,Long payableAmount, TransactionDetails transactionDetails) {
         this.trasnactionDetailId = trasnactionDetailId;
         this.transactionId = transactionId;
         this.personId = personId;
         this.inviteId = inviteId;
         this.amount = amount;
         this.lastUpdated = lastUpdated;
+        this.payableAmount = payableAmount;
         if (inviteId!= Constants.ERROR_STATE_MEMBERS)
             this.invite = new InviteResponse(transactionDetails.getInvite());
         if (personId!=Constants.ERROR_STATE_MEMBERS)

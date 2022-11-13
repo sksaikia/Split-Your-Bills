@@ -5,6 +5,15 @@ public class TransactionDetailsDTO {
     private Long personId;
     private Long inviteId;
     private Long amount;
+    private Long payableAmount;
+
+    public Long getPayableAmount() {
+        return payableAmount;
+    }
+
+    public void setPayableAmount(Long payableAmount) {
+        this.payableAmount = payableAmount;
+    }
 
     public TransactionDetailsDTO() {
     }
@@ -41,10 +50,11 @@ public class TransactionDetailsDTO {
         this.amount = amount;
     }
 
-    public TransactionDetailsDTO(Long transactionId, Long personId, Long inviteId, Long amount) {
+    public TransactionDetailsDTO(Long transactionId, Long personId, Long inviteId, Long amount, Long payableAmount) {
         this.transactionId = transactionId;
         this.personId = personId;
         this.inviteId = inviteId;
         this.amount = amount;
+        this.payableAmount = payableAmount;
     }
 }

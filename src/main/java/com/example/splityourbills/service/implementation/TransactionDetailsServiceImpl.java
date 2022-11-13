@@ -217,6 +217,7 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
                 transactionDetails.getInviteId(),
                 transactionDetails.getAmount(),
                 transactionDetails.getTransaction().getLastUpdated(),
+                transactionDetails.getPayableAmount(),
                 transactionDetails
 
         );
