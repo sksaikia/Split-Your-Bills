@@ -2,10 +2,7 @@ package com.example.splityourbills.service.interfaces;
 
 import com.example.splityourbills.dto.transactiondetails.TransactionDetailsDTO;
 import com.example.splityourbills.response.transaction.TransactionResponse;
-import com.example.splityourbills.response.transactionDetails.AddTransactionDetailResponse;
-import com.example.splityourbills.response.transactionDetails.GetAllTransactionDetailsSpaceAndMemberResponse;
-import com.example.splityourbills.response.transactionDetails.GetAllTransactionResponse;
-import com.example.splityourbills.response.transactionDetails.TransactionDetailsResponse;
+import com.example.splityourbills.response.transactionDetails.*;
 
 import java.util.List;
 
@@ -29,4 +26,5 @@ public interface TransactionDetailsService {
     GetAllTransactionDetailsSpaceAndMemberResponse getAllTXNBySpaceAndMemberID(Long spaceId, Long userId);
     TransactionDetailsResponse updateTXNDetailsById(Long txnDetailsID,TransactionDetailsDTO transactionDetailsDTO);
     Boolean deleteTXNDetailsById(Long txnDetailsID);
+    TransactionDetailsBalanceResponse getTxnDetailsBalance(Long userId);
 }

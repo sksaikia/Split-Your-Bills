@@ -96,6 +96,37 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
     }
 
     /**
+     * Get all transaction Details by a member id , calculate the total In , total Amount and Balance
+     * totalIn -> Amount which is to be received by the member
+     * totalOut -> Amount which is to be given to others by the member
+     * totalContributionAmount is totalOut
+     * totalIn = totalPayable Amount -  totalContributionAmount
+     * */
+    @Override
+    public TransactionDetailsBalanceResponse getTxnDetailsBalance(Long userId){
+        Optional<List<TransactionDetails>> optionalTXNDetails = transactionDetailsRepository
+                .findByPersonId(userId, Sort.by(Sort.Direction.DESC, "lastUpdated"));
+        long totalPayableAmount = 0;
+        long totalContributionAmount = 0;
+        if (optionalTXNDetails.isPresent()){
+            List<TransactionDetails> txnDetails = optionalTXNDetails.get();
+            List<TransactionDetailsResponse> transactionDetailsResponses = new ArrayList<>();
+            for(TransactionDetails transactionDetails : txnDetails){
+                TransactionDetailsResponse txnDetailsResponse = new TransactionDetailsResponse(transactionDetails);
+                totalContributionAmount += txnDetailsResponse.getAmount();
+                totalPayableAmount += txnDetailsResponse.getPayableAmount();
+                //  transactionDetailsResponses.add(txnDetailsResponse);
+            }
+            return new TransactionDetailsBalanceResponse(
+                    totalPayableAmount - totalContributionAmount,
+                    totalContributionAmount
+            );
+        }else{
+            throw new ResourceNotFoundException("TXN with the particular user id is not present, userID : " + userId);
+        }
+    }
+
+    /**
      * Get all transaction Details by a invite id
      * */
     @Override

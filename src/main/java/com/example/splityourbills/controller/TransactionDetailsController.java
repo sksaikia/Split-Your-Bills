@@ -6,10 +6,7 @@ import com.example.splityourbills.dto.transaction.TransactionDTO;
 import com.example.splityourbills.dto.transactiondetails.TransactionDetailsDTO;
 import com.example.splityourbills.exception.custom_exceptions.common.InternalServerException;
 import com.example.splityourbills.response.transaction.TransactionResponse;
-import com.example.splityourbills.response.transactionDetails.AddTransactionDetailResponse;
-import com.example.splityourbills.response.transactionDetails.GetAllTransactionDetailsSpaceAndMemberResponse;
-import com.example.splityourbills.response.transactionDetails.GetAllTransactionResponse;
-import com.example.splityourbills.response.transactionDetails.TransactionDetailsResponse;
+import com.example.splityourbills.response.transactionDetails.*;
 import com.example.splityourbills.service.implementation.TransactionDetailsServiceImpl;
 import com.example.splityourbills.service.implementation.TransactionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +98,16 @@ public class TransactionDetailsController {
             throw new InternalServerException("Unexpected error occured");
         }
 
+    }
+
+    @GetMapping("/balance")
+    public BaseApiResponse getTxnBalance(@RequestParam Long userId) {
+        TransactionDetailsBalanceResponse response =  transactionDetailsService.getTxnDetailsBalance(userId);
+        if (response!=null){
+            return createBaseApiResponse(response);
+        }else{
+            throw new InternalServerException("Unexpected error occured");
+        }
     }
 
     @PutMapping()
