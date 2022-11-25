@@ -8,8 +8,12 @@ import com.example.splityourbills.repository.UserRepository;
 import com.example.splityourbills.response.auth.JwtAuthenticationResponse;
 import com.example.splityourbills.response.auth.LoginResponse;
 import com.example.splityourbills.response.auth.UserResponse;
+import com.example.splityourbills.response.invite.InviteResponse;
+import com.example.splityourbills.response.spaceMember.GetAllSpaceMembersResponse;
+import com.example.splityourbills.response.spaceMember.SpaceMemberResponse;
 import com.example.splityourbills.security.JwtTokenProvider;
 import com.example.splityourbills.service.interfaces.AuthService;
+import com.example.splityourbills.service.interfaces.InviteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +37,11 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    InviteServiceImpl inviteService;
+
+    @Autowired
+    SpaceMemberServiceImpl spaceMemberService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -42,15 +51,35 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public URI registerUser(SignUpRequest signUpRequest) {
-        if (userRepository.existsByPhoneNo(signUpRequest.getPhoneNo())){
+        if (userRepository.existsByPhoneNo(signUpRequest.getPhoneNo())) {
             throw new CustomDataConflictException("Phone number is already used ");
         }
 
-        User user = new User(signUpRequest.getName(), signUpRequest.getPhoneNo() , signUpRequest.getPassword());
+        User user = new User(signUpRequest.getName(), signUpRequest.getPhoneNo(), signUpRequest.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User result = userRepository.save(user);
+
+        /**
+         * Check whether that phoneNo is present on Invites table or not
+         * */
+        InviteResponse inviteResponse = inviteService.getInviteByPhoneNo(signUpRequest.getPhoneNo());
+
+        if (inviteResponse.getPhoneNo().equals(signUpRequest.getPhoneNo())) {
+            //So the phone no exists on the Invite DB
+            long currentUserId = result.getUserId();
+            //Get Space Member table data for particular invite id
+            GetAllSpaceMembersResponse spaceMembersResponse = spaceMemberService.getAllSpacesByInviteId(inviteResponse.getInviteId());
+            for (int i = 0; i < spaceMembersResponse.getSpaceMemberResponses().size(); i++) {
+                SpaceMemberResponse currentSpaceMemberResponse
+                        = spaceMembersResponse.getSpaceMemberResponses().get(i);
+                spaceMemberService.updateSpaceMemberData(
+                        currentSpaceMemberResponse, inviteResponse.getInviteId(), currentUserId, currentSpaceMemberResponse.getSpaceMemberId()
+                );
+            }
+        }
+
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/users/{username}").buildAndExpand(result.getPhoneNo()).toUri();
         return location;

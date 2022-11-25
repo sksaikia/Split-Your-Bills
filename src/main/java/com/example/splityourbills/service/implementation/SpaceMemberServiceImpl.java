@@ -265,6 +265,18 @@ public class SpaceMemberServiceImpl implements SpaceMemberService {
         return true;
     }
 
+    @Override
+    public void updateSpaceMemberData(SpaceMemberResponse response,
+                                                     Long inviteId, Long userId,  Long spaceMemberId) {
+        Optional<SpaceMembers> optionalSpaceMember = spaceMemberRepository.findById(spaceMemberId);
+        if (optionalSpaceMember.isPresent()){
+            SpaceMembers spaceMember = optionalSpaceMember.get();
+            spaceMember.setJoined(true);
+            spaceMember.setPersonId(userId);
+            spaceMemberRepository.save(spaceMember);
+        }
+    }
+
     public void setJoinedForInvitedUser(Long spaceMemberId,Long userId){
 
         Optional<SpaceMembers> optionalSpaceMembers = spaceMemberRepository.findById(spaceMemberId);

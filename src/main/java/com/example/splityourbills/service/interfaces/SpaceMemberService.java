@@ -27,4 +27,5 @@ public interface SpaceMemberService{
     SpaceMemberResponse findBySpaceIdAndPersonId(Long spaceId, Long personId);
     SpaceMemberResponse findByParticularId(Long spaceMemberId);
     Boolean setJoinedForInvitedUser(SetJoinedInvitedDTO spaceMemberIds,Long userId);
+    void updateSpaceMemberData(SpaceMemberResponse response,Long inviteId,Long userId, Long spaceMemberId);
 }

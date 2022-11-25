@@ -15,6 +15,7 @@ import com.example.splityourbills.response.space.SpaceResponse;
 import com.example.splityourbills.service.interfaces.InviteService;
 import com.example.splityourbills.service.interfaces.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -70,6 +71,22 @@ public class InviteServiceImpl implements InviteService {
     @Override
     public GetAllInviteResponse getAllInviteByInviteId(Long inviteId) {
         return null;
+    }
+
+    //Need to check whether the response data is empty or not
+    @Override
+    public InviteResponse getInviteByPhoneNo(String phoneNo) {
+        Optional<Invite> optionalInvite = inviteRepository.findByPhoneNo(phoneNo);
+        if (optionalInvite.isPresent()){
+            Invite invite = optionalInvite.get();
+            InviteResponse inviteResponse = new InviteResponse(invite.getInviteId(),invite.getSpaceId(),
+                    invite.getPhoneNo(),invite.getInviteName(),invite.getLastUpdated());
+            return inviteResponse;
+        }else{
+            return new InviteResponse();
+         //   throw new ResourceNotFoundException("Details with given invite id not found, inviteId: " + phoneNo);
+        }
+
     }
 
 //    private InviteResponse createInviteResponse(Invite invite) {

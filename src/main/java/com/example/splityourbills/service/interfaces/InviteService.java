@@ -10,4 +10,5 @@ public interface InviteService {
     InviteResponse getInviteByInviteId(Long inviteId);
     Long getInviteBySpaceIdAndPhoneNo(Long spaceId, String phoneNo);
     GetAllInviteResponse getAllInviteByInviteId(Long inviteId);
+    InviteResponse getInviteByPhoneNo(String phoneNo);
 }
