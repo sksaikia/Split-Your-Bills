@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://root:mboNikm0ZonVSVDimzAE@containers-us-west-108.railway.app:6484/railway
-    username: root
-    password: mboNikm0ZonVSVDimzAE
+    url: {{MYSQL_URL}}
+    username: {{MYSQLUSER}}
+    password: {{MYSQLPASSWORD}}
     name: split-your-bills
