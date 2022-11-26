@@ -66,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
          * */
         InviteResponse inviteResponse = inviteService.getInviteByPhoneNo(signUpRequest.getPhoneNo());
 
-        if (inviteResponse.getPhoneNo().equals(signUpRequest.getPhoneNo())) {
+        if (inviteResponse.getPhoneNo() != null && inviteResponse.getPhoneNo().equals(signUpRequest.getPhoneNo())) {
             //So the phone no exists on the Invite DB
             long currentUserId = result.getUserId();
             //Get Space Member table data for particular invite id
