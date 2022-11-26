@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    url: 'jdbc: ${{MYSQL_URL}}'
-    username: ${{MYSQLUSER}}
-    password: ${{MYSQLPASSWORD}}
-    name: split-your-bills
