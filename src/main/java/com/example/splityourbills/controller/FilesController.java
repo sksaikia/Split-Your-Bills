@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import com.example.splityourbills.dto.imageupload.FileInfo;
 import com.example.splityourbills.response.imageupload.ImageUploadResponse;
+import com.example.splityourbills.security.CurrentUser;
+import com.example.splityourbills.security.UserPrincipal;
 import com.example.splityourbills.service.interfaces.FilesStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -29,12 +31,13 @@ public class FilesController {
     FilesStorageService storageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<ImageUploadResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<ImageUploadResponse> uploadFile(@RequestParam("file") MultipartFile file,
+                                                          @CurrentUser UserPrincipal currentUser) {
         String message = "";
         try {
-            storageService.save(file);
+            storageService.save(file,currentUser.getId());
 
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            message = "Uploaded the file successfully: " ;
             return ResponseEntity.status(HttpStatus.OK).body(new ImageUploadResponse(message));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
