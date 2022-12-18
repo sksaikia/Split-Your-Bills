@@ -7,12 +7,14 @@ import com.example.splityourbills.exception.custom_exceptions.common.CustomParam
 import com.example.splityourbills.exception.custom_exceptions.auth.AuthenticationException;
 import com.example.splityourbills.exception.custom_exceptions.common.InternalServerException;
 import com.example.splityourbills.exception.custom_exceptions.common.ResourceNotFoundException;
+import com.example.splityourbills.response.imageupload.ImageUploadResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,12 @@ import java.io.StringWriter;
 class CustomControllerAdvice {
 
     private int NO_DATA_FOUND_CODE = 1;
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ImageUploadResponse> handleMaxSizeException(MaxUploadSizeExceededException exc) {
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ImageUploadResponse("File too large!"));
+    }
+
 
     @ExceptionHandler(NullPointerException.class) // exception handled
     public ResponseEntity<ErrorResponse> handleNullPointerExceptions(
