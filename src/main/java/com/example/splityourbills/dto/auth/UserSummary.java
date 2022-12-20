@@ -4,11 +4,21 @@ public class UserSummary {
     private Long id;
     private String username;
     private String name;
+    private String profilePic;
 
-    public UserSummary(Long id, String username, String name) {
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public UserSummary(Long id, String username, String name, String profilePic) {
         this.id = id;
         this.username = username;
         this.name = name;
+        this.profilePic = profilePic;
     }
 
     public Long getId() {

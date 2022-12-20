@@ -15,6 +15,15 @@ public class UserPrincipal implements UserDetails {
     private Long id;
     private String name;
     private String phoneNo;
+    private String profilePic;
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
 
     @JsonIgnore
     private String password;
@@ -57,12 +66,14 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
-    public UserPrincipal(Long id, String name, String phoneNo,String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String name, String phoneNo,String password, Collection<? extends GrantedAuthority> authorities,
+                         String profilePic) {
         this.id = id;
         this.name = name;
         this.phoneNo = phoneNo;
         this.password = password;
         this.authorities = authorities;
+        this.profilePic = profilePic;
     }
 
 
@@ -76,7 +87,8 @@ public class UserPrincipal implements UserDetails {
                 user.getUserName(),
                 user.getPhoneNo(),
                 user.getPassword(),
-                authorities
+                authorities,
+                user.getProfilePic()
         );
     }
 

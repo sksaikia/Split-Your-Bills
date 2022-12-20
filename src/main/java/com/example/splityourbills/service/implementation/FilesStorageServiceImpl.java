@@ -3,15 +3,22 @@ package com.example.splityourbills.service.implementation;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.*;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.example.splityourbills.controller.FilesController;
+import com.example.splityourbills.dto.imageupload.FileInfo;
 import com.example.splityourbills.service.interfaces.FilesStorageService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
@@ -28,10 +35,13 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file, Long userId) {
+    public String save(MultipartFile file, Long userId) {
         try {
             String filename = userId + "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
             Files.copy(file.getInputStream(), this.root.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
+            String url = MvcUriComponentsBuilder
+                    .fromMethodName(FilesController.class, "getFile", filename).build().toString();
+            return url;
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");

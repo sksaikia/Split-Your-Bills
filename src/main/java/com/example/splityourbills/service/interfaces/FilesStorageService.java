@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FilesStorageService {
     public void init();
 
-    public void save(MultipartFile file, Long userId);
+    public String save(MultipartFile file, Long userId);
 
     public Resource load(String filename);
 

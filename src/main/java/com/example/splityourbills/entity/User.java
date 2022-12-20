@@ -43,6 +43,9 @@ public class User{
     @Column(name = "last_updated",nullable = false)
     private Date lastUpdated;
 
+    @Column(name = "profile_pic", nullable = true)
+    private String profilePic;
+
     @PrePersist
     private void onCreate(){
         lastUpdated = new Date();
@@ -57,6 +60,22 @@ public class User{
 
     public User() {
 
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
     public User(String userName, String phoneNo, String password) {
